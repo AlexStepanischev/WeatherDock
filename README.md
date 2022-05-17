@@ -3,7 +3,7 @@ Application build with **SwiftUI**, tested on **MacOS Monterey 12.3.1**
 ### Weather forecast in MacOS menu bar
 Weather Dock is a MacOS headless application that shows popover view under the menu bar with weather info. Application requests and uses user location data to provide weather forecast by coordinates. Also user could type any desired city name inline to get weather info for any city of his choise.
 ### Screenshots
-![Light mode screenshot](/docs/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/screen2.png "Dark mode screenshot")
+![Light mode screenshot](/docs/images/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/images/screen2.png "Dark mode screenshot")
 ### Functionality
 - Refresh icon is a button that refreshes current weather status
 - Locate icon is a button that updates current and forecasted weather data by current user location and sets this behaviour as default
