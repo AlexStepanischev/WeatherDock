@@ -27,8 +27,8 @@
 		E261C407283285100048B5DE /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3F9283285100048B5DE /* ForecastView.swift */; };
 		E261C408283285100048B5DE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3FA283285100048B5DE /* ContentView.swift */; };
 		E261C40A283285360048B5DE /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = E261C409283285360048B5DE /* keys.plist */; };
-		E2A0AADE2833CB3C002AFACF /* screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AADD2833CB3C002AFACF /* screen1.png */; };
-		E2A0AAE02833CB42002AFACF /* screen2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AADF2833CB42002AFACF /* screen2.png */; };
+		E2A0AAF02833CFEF002AFACF /* screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEE2833CFEF002AFACF /* screen1.png */; };
+		E2A0AAF12833CFEF002AFACF /* screen2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEF2833CFEF002AFACF /* screen2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +56,8 @@
 		E261C409283285360048B5DE /* keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		E261C40B2832863A0048B5DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E261C40D283378730048B5DE /* index.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
-		E2A0AADD2833CB3C002AFACF /* screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen1.png; sourceTree = "<group>"; };
-		E2A0AADF2833CB42002AFACF /* screen2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen2.png; sourceTree = "<group>"; };
+		E2A0AAEE2833CFEF002AFACF /* screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen1.png; sourceTree = "<group>"; };
+		E2A0AAEF2833CFEF002AFACF /* screen2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,8 +169,8 @@
 		E2A0AADC2833CA92002AFACF /* images */ = {
 			isa = PBXGroup;
 			children = (
-				E2A0AADD2833CB3C002AFACF /* screen1.png */,
-				E2A0AADF2833CB42002AFACF /* screen2.png */,
+				E2A0AAEE2833CFEF002AFACF /* screen1.png */,
+				E2A0AAEF2833CFEF002AFACF /* screen2.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -234,12 +234,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E261C40A283285360048B5DE /* keys.plist in Resources */,
-				E2A0AADE2833CB3C002AFACF /* screen1.png in Resources */,
 				E261C3DE283283F50048B5DE /* Preview Assets.xcassets in Resources */,
 				E261C3E6283284C00048B5DE /* .gitignore in Resources */,
-				E2A0AAE02833CB42002AFACF /* screen2.png in Resources */,
+				E2A0AAF12833CFEF002AFACF /* screen2.png in Resources */,
 				E261C3E8283284E00048B5DE /* README.md in Resources */,
 				E261C3DB283283F50048B5DE /* Assets.xcassets in Resources */,
+				E2A0AAF02833CFEF002AFACF /* screen1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
