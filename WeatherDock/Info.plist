@@ -4,5 +4,7 @@
 <dict>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSLocationUsageDescription</key>
+	<string>Application requests user location and uses for getting weather data by coordinates</string>
 </dict>
 </plist>
