@@ -33,4 +33,5 @@ Application build tested under **Xcode 13.3.1**
 
 ## Support
 If you need a support or have any questions, feedback, bug reports or feature requests, please, contact via Telegram chat: https://t.me/weather_dock_app
+
 [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/)
