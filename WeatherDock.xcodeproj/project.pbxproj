@@ -53,6 +53,7 @@
 		E261C3FA283285100048B5DE /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E261C409283285360048B5DE /* keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		E261C40B2832863A0048B5DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E261C40D283378730048B5DE /* index.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +70,7 @@
 		E261C3CA283283F40048B5DE = {
 			isa = PBXGroup;
 			children = (
+				E261C40C283377DB0048B5DE /* docs */,
 				E261C3D5283283F40048B5DE /* WeatherDock */,
 				E261C3E5283284BF0048B5DE /* .gitignore */,
 				E261C3E7283284E00048B5DE /* README.md */,
@@ -149,6 +151,14 @@
 				E261C3F7283285100048B5DE /* GeneralSettingsView.swift */,
 			);
 			path = settings;
+			sourceTree = "<group>";
+		};
+		E261C40C283377DB0048B5DE /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				E261C40D283378730048B5DE /* index.md */,
+			);
+			path = docs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
