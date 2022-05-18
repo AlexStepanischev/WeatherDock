@@ -55,13 +55,13 @@ class WeatherData: ObservableObject {
         
         Task {
             let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCoordURL(lat: latitude, lon: longitude))
-            let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
+            let updatedForecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
             
             print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
             DispatchQueue.main.async {
                 self.currentWeatherData = updatedCurrentWeatherData
-                self.forecastData = updatedforecastData
+                self.forecastData = updatedForecastData
                 self.city = updatedCurrentWeatherData.name
                 AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
             }
@@ -96,14 +96,21 @@ class WeatherData: ObservableObject {
             
             location = (latitude, longitude)
             
-            let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
-            
-            print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
-            
-            DispatchQueue.main.async {
-                self.currentWeatherData = updatedCurrentWeatherData
-                self.forecastData = updatedforecastData
-                AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
+            if location == (0, 0) {
+                DispatchQueue.main.async {
+                    self.currentWeatherData = CurrentWeatherData.getEmpty()
+                    self.forecastData = ForecastData.getEmpty()
+                }
+            } else {
+                let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
+                
+                print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+                
+                DispatchQueue.main.async {
+                    self.currentWeatherData = updatedCurrentWeatherData
+                    self.forecastData = updatedforecastData
+                    AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
+                }
             }
         }
     }
