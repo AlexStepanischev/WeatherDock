@@ -46,8 +46,11 @@ struct ForecastData: Codable {
             let nowDate = Date(timeIntervalSince1970: nowWithOffset)
             
             let dataDate = Date(timeIntervalSince1970: data[0].dt)
-            let order = Calendar.current.compare(nowDate, to: dataDate, toGranularity: .day)
 
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = TimeZone(identifier: "UTC")!
+            let order = calendar.compare(nowDate, to: dataDate, toGranularity: .day)
+            
             switch order {
             case .orderedDescending:
                 data.removeFirst()
