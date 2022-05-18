@@ -54,7 +54,11 @@ struct Utils {
         if timeFormat == TimeFormat.twentyfour.rawValue {
             dateFormatter.timeStyle = DateFormatter.Style.short
         } else {
-            dateFormatter.dateFormat = "h a"
+            if #available(macOS 12.1, *) {
+                dateFormatter.dateFormat = "h a"
+            } else {
+                dateFormatter.dateFormat = "H a"
+            }
         }
 
         let localTime = dateFormatter.string(from: date)
