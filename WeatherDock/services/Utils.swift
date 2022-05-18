@@ -90,9 +90,10 @@ struct Utils {
         return localTime
     }
     
-    static func getDateToday() -> String {
-        let date = Date.now
+    static func getDate(dt: Double, timezone: Int) -> String {
+        let date = Date(timeIntervalSince1970: dt)
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = .init(secondsFromGMT: timezone)
         dateFormatter.dateStyle = .full
         
         let result = dateFormatter.string(from: date)

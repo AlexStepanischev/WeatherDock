@@ -34,7 +34,7 @@ struct ContentView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 Spacer()
-                Text(Utils.getDateToday()).font(.title2).padding(.bottom, 1)
+                Text(Utils.getDate(dt: data.currentWeatherData.dt, timezone: data.currentWeatherData.timezone)).font(.title2).padding(.bottom, 1)
                 Spacer()
                 Button {
                     NSApplication.shared.terminate(self)
