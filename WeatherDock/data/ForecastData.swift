@@ -92,7 +92,7 @@ struct Hourly: Codable, Identifiable {
     var visibility: Int
     var wind_speed: Double
     var wind_deg: Int
-    var wind_gust: Double
+    var wind_gust: Double?
     var weather: [Weather]
     var pop: Double
     
@@ -155,7 +155,7 @@ struct Daily: Codable, Identifiable {
     var dew_point: Double
     var wind_speed: Double
     var wind_deg: Int
-    var wind_gust: Double
+    var wind_gust: Double?
     var weather: [Weather]
     var clouds: Int
     var pop: Double
