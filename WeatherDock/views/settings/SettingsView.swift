@@ -24,7 +24,6 @@ struct SettingsView: View {
                 }
                 .tag(Tabs.advanced)
         }
-        .padding()
         .frame(width: 400, height: 400, alignment: .top)
     }
 }

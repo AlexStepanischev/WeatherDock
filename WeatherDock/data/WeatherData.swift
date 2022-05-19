@@ -100,6 +100,7 @@ class WeatherData: ObservableObject {
                 DispatchQueue.main.async {
                     self.currentWeatherData = CurrentWeatherData.getEmpty()
                     self.forecastData = ForecastData.getEmpty()
+                    self.refreshView()
                 }
             } else {
                 let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
@@ -109,6 +110,7 @@ class WeatherData: ObservableObject {
                 DispatchQueue.main.async {
                     self.currentWeatherData = updatedCurrentWeatherData
                     self.forecastData = updatedforecastData
+                    self.city = updatedCurrentWeatherData.name
                     AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
                 }
             }

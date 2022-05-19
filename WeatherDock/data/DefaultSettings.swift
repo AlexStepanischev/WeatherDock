@@ -12,6 +12,9 @@ struct DefaultSettings {
     static let pressureUnit = PressureUnits.inHg.rawValue
     static let timeFormat = TimeFormat.twelve.rawValue
     static let getDataBy = GetDataBy.location.rawValue
+    static let showTemperature = true
+    static let showDescription = false
+    static let showCityName = false
 }
 
 enum UnitsOfMeasurement: String, Identifiable{

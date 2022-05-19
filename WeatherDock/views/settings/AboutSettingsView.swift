@@ -30,6 +30,6 @@ struct AboutSettingsView: View {
             Spacer()
             Text("Powered with [OpenWeatherAPI](https://openweathermap.org/api)").padding(.top)
             Text("Copyright © 2022 Aleksandr Stepanischev").font(.footnote).foregroundColor(.gray).padding(.top)
-        }
+        }.padding()
     }
 }

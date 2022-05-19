@@ -23,6 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     let weatherData = WeatherData.shared
     
+    @AppStorage("showTemperature") private static var showTemperature = DefaultSettings.showTemperature
+    @AppStorage("showDescription") private static var showDescription = DefaultSettings.showDescription
+    @AppStorage("showCityName") private static var showCityName = DefaultSettings.showCityName
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
 
         WeatherData.shared.getAllData()
@@ -56,7 +60,24 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     static func updateMenuButton(currentWeatherData: CurrentWeatherData){
         if let menuButton = AppDelegate.statusItem?.button {
-            configureMenuButton(menuButton: menuButton, title: "\(Int(currentWeatherData.main.temp.rounded()))°\(Utils.getTempMeasurement())", systemSymbolName: Utils.getIconByTimeConditionId(id: currentWeatherData.weather[0].id, dt:currentWeatherData.dt))
+            var title = ""
+            
+            if showTemperature {
+                title += "\(Int(currentWeatherData.main.temp.rounded()))°\(Utils.getTempMeasurement())"
+            }
+            
+            if showDescription && currentWeatherData.weather[0].main != "No data"  {
+                title += " \(currentWeatherData.weather[0].main)"
+            }
+            
+            if showCityName && currentWeatherData.name != "Unknown City" {
+                if showDescription {
+                    title += ","
+                }
+                title += " \(currentWeatherData.name)"
+            }
+            
+            configureMenuButton(menuButton: menuButton, title: title, systemSymbolName: Utils.getIconByTimeConditionId(id: currentWeatherData.weather[0].id, dt:currentWeatherData.dt))
         }
     }
     
