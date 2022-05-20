@@ -1,8 +1,9 @@
 ## Weather Dock
 ### Weather forecast in MacOS menu bar
 Weather Dock is a MacOS headless application that shows popover view under the menu bar with weather info. Application requests and uses user location data to provide weather forecast by coordinates. Also user could type any desired city name inline to get weather info for any city of his choise.
-###Download
+### Download
 Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
+
 [![](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/app/id1624480719)
 ### Screenshots
 ![Light mode screenshot](/docs/images/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/images/screen2.png "Dark mode screenshot")
