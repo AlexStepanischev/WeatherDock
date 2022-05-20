@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LaunchAtLogin
 
 struct GeneralSettingsView: View {
     @AppStorage("unitsOfMeasurement") private var unitsOfMeasurement = DefaultSettings.unitsOfMeasurement
@@ -51,6 +52,7 @@ struct GeneralSettingsView: View {
                 Toggle("Temperature", isOn: $showTemperature)
                 .onChange(of: showTemperature){
                     tag in WeatherData.shared.refreshView()
+                    print(LaunchAtLogin.isEnabled)
                 }
                 Toggle("Short weather description", isOn: $showDescription)
                     .onChange(of: showDescription){
@@ -61,6 +63,8 @@ struct GeneralSettingsView: View {
                         tag in WeatherData.shared.refreshView()
                     }
             }.padding(.bottom)
+            Divider()
+            LaunchAtLogin.Toggle().padding(.top)
         }
     }
 }

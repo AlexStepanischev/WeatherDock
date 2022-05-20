@@ -29,6 +29,7 @@
 		E261C40A283285360048B5DE /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = E261C409283285360048B5DE /* keys.plist */; };
 		E2A0AAF02833CFEF002AFACF /* screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEE2833CFEF002AFACF /* screen1.png */; };
 		E2A0AAF12833CFEF002AFACF /* screen2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEF2833CFEF002AFACF /* screen2.png */; };
+		E2A0AAF42837A11E002AFACF /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A0AAF32837A11E002AFACF /* LaunchAtLogin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A0AAF42837A11E002AFACF /* LaunchAtLogin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,12 +187,16 @@
 				E261C3CF283283F40048B5DE /* Sources */,
 				E261C3D0283283F40048B5DE /* Frameworks */,
 				E261C3D1283283F40048B5DE /* Resources */,
+				E2A0AAF62837AB0A002AFACF /* Copy “Launch at Login Helper” */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = WeatherDock;
+			packageProductDependencies = (
+				E2A0AAF32837A11E002AFACF /* LaunchAtLogin */,
+			);
 			productName = WeatherDock;
 			productReference = E261C3D3283283F40048B5DE /* WeatherDock.app */;
 			productType = "com.apple.product-type.application";
@@ -219,6 +225,9 @@
 				Base,
 			);
 			mainGroup = E261C3CA283283F40048B5DE;
+			packageReferences = (
+				E2A0AAF22837A11D002AFACF /* XCRemoteSwiftPackageReference "LaunchAtLogin" */,
+			);
 			productRefGroup = E261C3D4283283F40048B5DE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -244,6 +253,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E2A0AAF62837AB0A002AFACF /* Copy “Launch at Login Helper” */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy “Launch at Login Helper”";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILT_PRODUCTS_DIR}/LaunchAtLogin_LaunchAtLogin.bundle/Contents/Resources/copy-helper-swiftpm.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E261C3CF283283F40048B5DE /* Sources */ = {
@@ -470,6 +500,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E2A0AAF22837A11D002AFACF /* XCRemoteSwiftPackageReference "LaunchAtLogin" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E2A0AAF32837A11E002AFACF /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A0AAF22837A11D002AFACF /* XCRemoteSwiftPackageReference "LaunchAtLogin" */;
+			productName = LaunchAtLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E261C3CB283283F40048B5DE /* Project object */;
 }

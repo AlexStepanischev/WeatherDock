@@ -1,7 +1,9 @@
 ## Weather Dock
-Application build with **SwiftUI**, tested on **MacOS Monterey 12.0.1, 12.3.1**
 ### Weather forecast in MacOS menu bar
 Weather Dock is a MacOS headless application that shows popover view under the menu bar with weather info. Application requests and uses user location data to provide weather forecast by coordinates. Also user could type any desired city name inline to get weather info for any city of his choise.
+###Download
+Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
+[![](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/app/id1624480719)
 ### Screenshots
 ![Light mode screenshot](/docs/images/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/images/screen2.png "Dark mode screenshot")
 ### Functionality
@@ -12,6 +14,8 @@ Weather Dock is a MacOS headless application that shows popover view under the m
     - Units of measurement: *imperial/metric*
     - Pressure unit: *inHG/mmHG/hPa*
     - Time format *12h/24h*
+    - Settings for customization of menu bar button to display *temperature, short weather description, city name*
+    - *Launch at login* setting
 - Application updates data in a background, but update frequency is limited by [OpenWeatherAPI](https://openweathermap.org/api) free tier restrictions: 
     - Current weather data - every *1 hour*
     - Foretasted weather data - every *24 hours*
@@ -19,6 +23,7 @@ Weather Dock is a MacOS headless application that shows popover view under the m
     
 ### Third Parties
  - Application powered by [OpenWeatherAPI](https://openweathermap.org/api)
+ - Launch at login setting added as a dependency on [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) helper
  
 ## How to build
 Application build tested under **Xcode 13.3.1, 13.4**
