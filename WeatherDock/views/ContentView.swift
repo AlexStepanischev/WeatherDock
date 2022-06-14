@@ -25,21 +25,15 @@ struct ContentView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.leading)
+                Spacer()
+                Text(Utils.getDate(dt: data.currentWeatherData.dt, timezone: data.currentWeatherData.timezone)).font(.title2).padding(.bottom, 1)
+                Spacer()
                 Button {
                     NSApp.activate(ignoringOtherApps: true)
                     NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
 
                 } label: {
                     Image(systemName: "gearshape")
-                }
-                .buttonStyle(PlainButtonStyle())
-                Spacer()
-                Text(Utils.getDate(dt: data.currentWeatherData.dt, timezone: data.currentWeatherData.timezone)).font(.title2).padding(.bottom, 1)
-                Spacer()
-                Button {
-                    NSApplication.shared.terminate(self)
-                } label: {
-                    Image(systemName: "xmark")
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.trailing)

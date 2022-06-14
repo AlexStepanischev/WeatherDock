@@ -19,6 +19,7 @@ struct WeatherDockApp: App {
 
 class AppDelegate: NSObject, NSApplicationDelegate{
     static var statusItem: NSStatusItem?
+    var menu: NSMenu!
     var popOver = NSPopover()
     
     let weatherData = WeatherData.shared
@@ -46,7 +47,18 @@ class AppDelegate: NSObject, NSApplicationDelegate{
                                             systemSymbolName: Utils.getIconByTimeConditionId(id: weatherData.currentWeatherData.weather[0].id,
                                                                                          dt: weatherData.currentWeatherData.dt))
             menuButton.action = #selector(menuButtonToggle)
+            menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
+        
+        let statusBarMenu = NSMenu(title: "Status Bar Menu")
+        statusBarMenu.addItem(
+                    withTitle: "Quit",
+                    action: #selector(AppDelegate.quit),
+                    keyEquivalent: "")
+
+        //Right click menu
+        menu = statusBarMenu
+        
     }
     
     static func configureMenuButton(menuButton: NSStatusBarButton, title: String, systemSymbolName: String){
@@ -82,17 +94,29 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     @objc func menuButtonToggle(sender: AnyObject){
-        if popOver.isShown{
-            popOver.performClose(sender)
+        let event = NSApp.currentEvent!
+
+        if event.type ==  NSEvent.EventType.rightMouseUp {
+            AppDelegate.statusItem!.menu = menu
+            AppDelegate.statusItem!.button?.performClick(nil)
+            AppDelegate.statusItem!.menu = nil
         } else {
-            if let menuButton = AppDelegate.statusItem?.button{
-                self.popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: NSRectEdge.minY)
-                popOver.contentViewController?.view.window?.makeKey()
-                weatherData.updateUIData()
-                DispatchQueue.main.async {
-                    NSApp.keyWindow?.makeFirstResponder(nil)
+            if popOver.isShown{
+                popOver.performClose(sender)
+            } else {
+                if let menuButton = AppDelegate.statusItem?.button{
+                    self.popOver.show(relativeTo: menuButton.bounds, of: menuButton, preferredEdge: NSRectEdge.minY)
+                    popOver.contentViewController?.view.window?.makeKey()
+                    weatherData.updateUIData()
+                    DispatchQueue.main.async {
+                        NSApp.keyWindow?.makeFirstResponder(nil)
+                    }
                 }
             }
         }
+    }
+    
+    @objc func quit() {
+        NSApplication.shared.terminate(self)
     }
 }
