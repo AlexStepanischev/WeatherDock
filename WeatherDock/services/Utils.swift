@@ -129,6 +129,11 @@ struct Utils {
     static func getIconByTimeConditionId(id: Int, dt: Double) -> String {
         let sunriseToday = WeatherData.shared.currentWeatherData.sys.sunrise
         let sunsetToday = WeatherData.shared.currentWeatherData.sys.sunset
+        
+        if WeatherData.shared.forecastData.getDailyTrimmed().isEmpty {
+            return icons[id]?.0 ?? "cloud.sun"
+        }
+        
         let sunriseTomorrow = WeatherData.shared.forecastData.getDailyTrimmed()[0].sunrise
         let sunsetTomorrow = WeatherData.shared.forecastData.getDailyTrimmed()[0].sunset
         
