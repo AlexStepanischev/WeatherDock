@@ -96,7 +96,7 @@ class WeatherData: ObservableObject {
             
             location = (latitude, longitude)
             
-            if location == (0, 0) {
+            if location == (0.0, 0.0) {
                 DispatchQueue.main.async {
                     self.currentWeatherData = CurrentWeatherData.getEmpty()
                     self.forecastData = ForecastData.getEmpty()
