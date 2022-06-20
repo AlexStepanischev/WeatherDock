@@ -22,8 +22,12 @@ struct ForecastData: Codable {
             return Hourly.getEmptyArray()
         }
 
-        while data[0].dt < Date.now.timeIntervalSince1970 {
+        while !data.isEmpty && data[0].dt < Date.now.timeIntervalSince1970 {
             data.removeFirst()
+        }
+        
+        if data.isEmpty {
+            return Hourly.getEmptyArray()
         }
         
         let result = Array(data.prefix(24))
