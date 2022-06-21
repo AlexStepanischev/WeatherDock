@@ -25,11 +25,15 @@ struct CurrentWeatherView: View {
                 VStack (alignment: .leading){
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
+                            .help("Sunrise")
                         Text(Utils.getLongTimefromUnix(dt: data.sys.sunrise, timezone: data.timezone))
+                            .help("Sunrise")
                     }.padding(.bottom, 1)
                     HStack{
                         Image(systemName: "sunset").font(Font.system(size: 15))
+                            .help("Sunset")
                         Text(Utils.getLongTimefromUnix(dt: data.sys.sunset, timezone: data.timezone))
+                            .help("Sunset")
                     }
                 }
             }.padding(.top)
@@ -37,15 +41,21 @@ struct CurrentWeatherView: View {
             HStack{
                 HStack{
                     Image(systemName: "humidity").font(Font.system(size: 15, weight: .bold))
+                        .help("Humidity")
                     Text("\(data.main.humidity)%").font(.headline)
+                        .help("Humidity")
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
+                        .help("Wind speed")
                     Text("\(Int(data.wind.speed.rounded())) \(Utils.getSpeedMeasurement())").font(.headline)
+                        .help("Wind speed")
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
+                        .help("Pressure")
                     Text(Utils.getPressureValueUnit(hPa: data.main.pressure)).font(.headline)
+                        .help("Pressure")
                 }.padding(.trailing)
             }.padding(.top, 1)
         }
