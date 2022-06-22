@@ -63,7 +63,7 @@ struct CurrentWeatherView: View {
                         .help("Air quality")
                     Text(Utils.aqi[aqi.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
                         .help("Air quality")
-                }.padding(.trailing)
+                }
             }.padding(.top, 1)
         }
     }
