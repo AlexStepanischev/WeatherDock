@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CurrentWeatherView: View {
     var data: CurrentWeatherData
+    var aqi: AirPollutionData
     @Binding var updater: Bool
     
     var body: some View {
@@ -56,6 +57,12 @@ struct CurrentWeatherView: View {
                         .help("Pressure")
                     Text(Utils.getPressureValueUnit(hPa: data.main.pressure)).font(.headline)
                         .help("Pressure")
+                }.padding(.trailing)
+                HStack{
+                    Image(systemName: Utils.aqi[aqi.list[0].main.aqi]?.1 ?? "aqi.low").font(Font.system(size: 15, weight: .bold))
+                        .help("Air quality")
+                    Text(Utils.aqi[aqi.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
+                        .help("Air quality")
                 }.padding(.trailing)
             }.padding(.top, 1)
         }

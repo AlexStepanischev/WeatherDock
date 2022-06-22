@@ -10,6 +10,7 @@ import SwiftUI
 class WeatherData: ObservableObject {
     @Published var currentWeatherData = CurrentWeatherData.getEmpty()
     @Published var forecastData = ForecastData.getEmpty()
+    @Published var airPollutionData = AirPollutionData.getEmpty()
     @Published var updater = true
     @AppStorage("getDataBy") private var getDataBy = DefaultSettings.getDataBy
     
@@ -42,9 +43,12 @@ class WeatherData: ObservableObject {
             let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: url)
 
             print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            
+            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: updatedCurrentWeatherData.coord.lat, lon: updatedCurrentWeatherData.coord.lon))
 
             DispatchQueue.main.async {
                 self.currentWeatherData = updatedCurrentWeatherData
+                self.airPollutionData = updatedAirPollutionData
                 AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
             }
         }
@@ -55,12 +59,14 @@ class WeatherData: ObservableObject {
         
         Task {
             let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCoordURL(lat: latitude, lon: longitude))
+            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
             let updatedForecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
             
             print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
             DispatchQueue.main.async {
                 self.currentWeatherData = updatedCurrentWeatherData
+                self.airPollutionData = updatedAirPollutionData
                 self.forecastData = updatedForecastData
                 self.city = updatedCurrentWeatherData.name
                 AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
@@ -99,16 +105,19 @@ class WeatherData: ObservableObject {
             if location == (0.0, 0.0) {
                 DispatchQueue.main.async {
                     self.currentWeatherData = CurrentWeatherData.getEmpty()
+                    self.airPollutionData = AirPollutionData.getEmpty()
                     self.forecastData = ForecastData.getEmpty()
                     self.refreshView()
                 }
             } else {
+                let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
                 let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
                 
                 print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
                 
                 DispatchQueue.main.async {
                     self.currentWeatherData = updatedCurrentWeatherData
+                    self.airPollutionData = updatedAirPollutionData
                     self.forecastData = updatedforecastData
                     self.city = updatedCurrentWeatherData.name
                     AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)

@@ -39,6 +39,15 @@ struct Network {
         return url
     }
     
+    static func getAirPollutionUrl(lat: Double, lon: Double) -> URL {
+        let latitude = String(format: "%f", lat)
+        let longitude = String(format: "%f", lon)
+        
+        let url_string = "\(openWeatherApi)air_pollution?lat=\(latitude)&lon=\(longitude)&appid=\(getApiKey())"
+
+        let url = URL(string: url_string)!
+        return url
+    }
     
     static func getCurrentWeatherData(url: URL) async -> CurrentWeatherData {
         do {
@@ -52,6 +61,20 @@ struct Network {
             print(error)
         }
         return CurrentWeatherData.getEmpty()
+    }
+    
+    static func getAirPollutionData(url: URL) async -> AirPollutionData {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(AirPollutionData.self, from: data){
+                return decodedResponse
+            }
+        } catch {
+            print("Issues with getting data form API")
+            print(error)
+        }
+        return AirPollutionData.getEmpty()
     }
     
     static func getForecastData(url: URL) async -> ForecastData {

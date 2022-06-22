@@ -208,4 +208,13 @@ struct Utils {
         803: ("cloud", "cloud"),
         804: ("cloud", "cloud")
     ]
+    
+    static let aqi = [
+        0: ("Unknown", "aqi.low"),
+        1: ("Good", "aqi.low"),
+        2: ("Fair", "aqi.medium"),
+        3: ("Moderate", "aqi.medium"),
+        4: ("Poor", "aqi.high"),
+        5: ("Very Poor", "aqi.high")
+    ]
 }

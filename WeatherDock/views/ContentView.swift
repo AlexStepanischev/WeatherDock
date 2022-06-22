@@ -74,7 +74,7 @@ struct ContentView: View {
    
             }.padding(.top, 5)
             
-            CurrentWeatherView(data: data.currentWeatherData, updater: $data.updater)
+            CurrentWeatherView(data: data.currentWeatherData, aqi: data.airPollutionData, updater: $data.updater)
             
             Divider()
 
