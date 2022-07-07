@@ -80,7 +80,7 @@ struct ContentView: View {
 
             ForecastView(forecastData: data.forecastData, updater: $data.updater)
         }
-        .frame(width: 420, height: 420)
+        .frame(width: 420, height: 430)
         .onTapGesture {
             DispatchQueue.main.async {
                 NSApp.keyWindow?.makeFirstResponder(nil)

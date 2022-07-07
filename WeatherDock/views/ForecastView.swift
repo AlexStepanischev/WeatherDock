@@ -18,6 +18,12 @@ struct ForecastView: View {
                 ForEach(forecastData.getHourlyTrimmed()){ data in
                     VStack{
                         Text("\(Int(data.temp.rounded()))°\(Utils.getTempMeasurement())").font(.headline)
+                        HStack(spacing: 1) {
+                            Image(systemName: "drop").font(.caption)
+                                .help("Probability of precipitation")
+                            Text("\(Int(round(data.pop*100)))%").font(.caption)
+                                .help("Probability of precipitation")
+                        }
                         Image(systemName: Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)).font(.title).frame(height: 15)
                         Text(Utils.getTimefromUnix(dt: data.dt, timezone: forecastData.timezone_offset)).font(.subheadline).padding(.top, 2)
                     }.padding(.leading)
@@ -36,7 +42,12 @@ struct ForecastView: View {
                     Text(dayDate.1).font(.caption).padding(.bottom, 5)
                     Image(systemName: Utils.getIconByConditionId(id: data.weather[0].id)).font(.title).frame(height: 15)
                     Text("\(Int(data.temp.max.rounded()))°\(Utils.getTempMeasurement())").font(.subheadline).bold().padding(.top, 2)
-                    Text("\(Int(data.temp.night.rounded()))°\(Utils.getTempMeasurement())").font(.subheadline)
+                    HStack(spacing: 1) {
+                        Image(systemName: "drop").font(.caption)
+                            .help("Probability of precipitation")
+                        Text("\(Int(round(data.pop*100)))%").font(.caption)
+                            .help("Probability of precipitation")
+                    }
                 }
                 .popover(isPresented: self.makeIsPresented(id: dayDate.1), arrowEdge: .bottom) {
                     DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: forecastData.timezone_offset)
