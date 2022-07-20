@@ -11,6 +11,9 @@ Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
 - Refresh icon is a button that refreshes current weather status
 - Locate icon is a button that updates current and forecasted weather data by current user location and sets this behaviour as default
 - City name is an inline editable text field, where user can submit (with enter hit) any city name and application will try to get and update weather info based on entered value. Application will remember city name for further updates, if user wants to switch back to updates by coordinates, he should click Locate icon button.
+- Mouse over Air quality data will show popover with Pollutants info
+- Mouse over future day forecast will show popover with forecast details for that day
+- Right click on Menu item (dock) element will show Quit button to close app 
 - Settings gear icon is a button that opens Setting view, following app settings are available:
     - Units of measurement: *imperial/metric*
     - Pressure unit: *inHG/mmHG/hPa*
