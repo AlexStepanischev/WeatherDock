@@ -37,7 +37,7 @@ struct ContentView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.trailing)
-            }
+            }.padding(.top)
             HStack(){
                 Button {
                     getDataBy = GetDataBy.location.rawValue
@@ -80,7 +80,7 @@ struct ContentView: View {
 
             ForecastView(forecastData: data.forecastData, updater: $data.updater)
         }
-        .frame(width: 420, height: 430)
+        .frame(width: 430)
         .onTapGesture {
             DispatchQueue.main.async {
                 NSApp.keyWindow?.makeFirstResponder(nil)

@@ -57,7 +57,7 @@ struct ForecastView: View {
                     self.hoverState = hover
                 }
             }
-        }.padding(.top)
+        }.padding(.vertical)
     }
     
     func makeIsPresented(id: String) -> Binding<Bool> {
