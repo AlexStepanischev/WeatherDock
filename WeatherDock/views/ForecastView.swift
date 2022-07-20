@@ -83,12 +83,14 @@ struct DailyDetailsPopoverView: View {
                 HStack(alignment: .top){
                     Image(systemName: Utils.getIconByConditionId(id: data.weather[0].id)).font(Font.system(size: 40, weight: .bold))
                     VStack(alignment: .leading) {
-                        Text("\(Int(data.temp.max.rounded()))°\(Utils.getTempMeasurement())").font(Font.system(size: 30, weight: .bold))
+                        Text("\(Int(data.temp.max.rounded()))°\(Utils.getTempMeasurement())")
+                            .font(Font.system(size: 30, weight: .bold))
+                            .frame(width: 90)
                         HStack{
                             Image(systemName: "moon.stars")
                             Text("\(Int(data.temp.night.rounded()))°\(Utils.getTempMeasurement())")
                         }
-                    }
+                    }.multilineTextAlignment(.leading)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
                     Text(data.weather[0].description.firstCapitalized).font(.title2)
@@ -125,6 +127,6 @@ struct DailyDetailsPopoverView: View {
                 }
             }.padding(.top, 1)
         }
-        .frame(width: 420, height: 160)
+        .frame(width: 450, height: 160)
     }
 }
