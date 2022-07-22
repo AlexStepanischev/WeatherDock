@@ -23,7 +23,7 @@ struct CurrentWeatherView: View {
                 VStack(alignment: .leading){
                     Text(data.weather[0].description.firstCapitalized).font(.title2)
                     Text("FEELS LIKE \(Int(data.main.feels_like.rounded()))°\(Utils.getTempMeasurement())").font(.footnote)
-                }.padding(.trailing)
+                }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
@@ -38,7 +38,7 @@ struct CurrentWeatherView: View {
                             .help("Sunset")
                     }
                 }
-            }.padding(.top)
+            }.padding(.top).padding(.horizontal)
             
             HStack{
                 HStack{
