@@ -19,6 +19,7 @@ struct CurrentWeatherView: View {
                 HStack(alignment: .top){
                     Image(systemName: Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)).font(Font.system(size: 40, weight: .bold))
                     Text("\(Int(data.main.temp.rounded()))°\(Utils.getTempMeasurement())").font(Font.system(size: 30, weight: .bold))
+                        .frame(width: 90)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
                     Text(data.weather[0].description.firstCapitalized).font(.title2)
