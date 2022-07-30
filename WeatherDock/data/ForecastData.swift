@@ -33,6 +33,19 @@ struct ForecastData: Codable {
         let result = Array(data.prefix(24))
         return result
     }
+    func getDailyTrimmedToSeven() -> [Daily] {
+        var data = daily
+        
+        if data[0].dt == 0.0 {
+            return Daily.getEmptyArray()
+        }
+        
+        while data.count < 7 {
+            data.removeFirst()
+        }
+        
+        return data
+    }
     
     func getDailyTrimmed() -> [Daily] {
         var data = daily

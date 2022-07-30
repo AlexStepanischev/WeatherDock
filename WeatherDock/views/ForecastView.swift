@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ForecastView: View {
     var forecastData: ForecastData
+    var daily: [Daily]
     @Binding var updater: Bool
     @State var hoverState = false
     @State var hoverID = ""
@@ -35,7 +36,7 @@ struct ForecastView: View {
         Divider()
         
         HStack(spacing: 25){
-            ForEach(forecastData.getDailyTrimmed()){ data in
+            ForEach(daily){ data in
                 let dayDate = Utils.getDayDate(dt: data.dt, timezone: forecastData.timezone_offset)
                 VStack{
                     Text(dayDate.0.uppercased()).font(.headline)

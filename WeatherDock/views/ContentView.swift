@@ -78,7 +78,7 @@ struct ContentView: View {
             
             Divider()
 
-            ForecastView(forecastData: data.forecastData, updater: $data.updater)
+            ForecastView(forecastData: data.forecastData, daily: data.getDaily(), updater: $data.updater)
         }
         .frame(width: 430)
         .onTapGesture {

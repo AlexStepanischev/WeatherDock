@@ -74,6 +74,14 @@ class WeatherData: ObservableObject {
         }
     }
     
+    func getDaily() -> [Daily]{
+        if forecastData.getDailyTrimmed().count < 7 {
+            getAllData()
+            return forecastData.getDailyTrimmedToSeven()
+        }
+        return forecastData.getDailyTrimmed()
+    }
+    
     func refreshView(){
         objectWillChange.send()
         updater.toggle()
