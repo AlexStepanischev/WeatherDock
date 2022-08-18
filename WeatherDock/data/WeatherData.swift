@@ -26,6 +26,10 @@ class WeatherData: ObservableObject {
     var timer: Timer?
     
     private init() {
+        setTimer()
+    }
+    
+    func setTimer(){
         timer = Timer.scheduledTimer(withTimeInterval: intervalCurrentWeatherBackgroundUpdate, repeats: true, block: { _ in
             self.refreshCurrentWeatherData()
         })

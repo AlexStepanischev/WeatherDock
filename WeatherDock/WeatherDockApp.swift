@@ -32,6 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate{
 
         WeatherData.shared.getAllData()
         
+        fileNotifications()
+        
         let menuView = ContentView(data: self.weatherData)
         
         popOver.behavior = .transient
@@ -118,5 +120,16 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     @objc func quit() {
         NSApplication.shared.terminate(self)
+    }
+    
+    @objc func onWakeNote(note: NSNotification) {
+        WeatherData.shared.getAllData()
+        WeatherData.shared.setTimer()
+    }
+
+    func fileNotifications() {
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(onWakeNote(note:)),
+            name: NSWorkspace.didWakeNotification, object: nil)
     }
 }
