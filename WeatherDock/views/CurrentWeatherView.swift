@@ -60,17 +60,19 @@ struct CurrentWeatherView: View {
                     Text(Utils.getPressureValueUnit(hPa: data.main.pressure)).font(.headline)
                         .help("Pressure")
                 }.padding(.trailing)
-                HStack{
-                    Image(systemName: Utils.aqi[aqi.list[0].main.aqi]?.1 ?? "aqi.low").font(Font.system(size: 15, weight: .bold))
-                        .help("Air quality")
-                    Text(Utils.aqi[aqi.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
-                        .help("Air quality")
-                        .padding(.trailing)
-                }.popover(isPresented: self.$isPopover, arrowEdge: .trailing) {
-                    AQPopoverView(components: aqi.list[0].components)
-                }
-                .onHover { hover in
-                    self.isPopover = hover
+                if aqi.list.count > 0 {
+                    HStack{
+                        Image(systemName: Utils.aqi[aqi.list[0].main.aqi]?.1 ?? "aqi.low").font(Font.system(size: 15, weight: .bold))
+                            .help("Air quality")
+                        Text(Utils.aqi[aqi.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
+                            .help("Air quality")
+                            .padding(.trailing)
+                    }.popover(isPresented: self.$isPopover, arrowEdge: .trailing) {
+                        AQPopoverView(components: aqi.list[0].components)
+                    }
+                    .onHover { hover in
+                        self.isPopover = hover
+                    }
                 }
             }.padding(.top, 1)
         }
