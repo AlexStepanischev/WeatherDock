@@ -22,12 +22,15 @@ Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
     - *Launch at login* setting
 - Application updates data in a background, but update frequency is limited by [OpenWeatherAPI](https://openweathermap.org/api) free tier restrictions: 
     - Current weather data - every *1 hour*
-    - Foretasted weather data - every *24 hours*
+    - Forecasted weather data - every *24 hours*
     - Also current weather data would be updated on popover open, but not more than once every *20 minutes*
     
 ### Third Parties
  - Application powered by [OpenWeatherAPI](https://openweathermap.org/api)
  - Launch at login setting added as a dependency on [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) helper
+ 
+### Changelog
+ - For changelog please visit [Releases](https://github.com/AlexStepanischev/WeatherDock/releases) page
  
 ## How to build
 Application build tested under **Xcode 13.3.1, 13.4**
