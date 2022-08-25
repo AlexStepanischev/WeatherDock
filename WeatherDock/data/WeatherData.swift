@@ -6,22 +6,23 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 class WeatherData: ObservableObject {
     @Published var currentWeatherData = CurrentWeatherData.getEmpty()
     @Published var forecastData = ForecastData.getEmpty()
     @Published var airPollutionData = AirPollutionData.getEmpty()
     @Published var updater = true
+    
     @AppStorage("getDataBy") private var getDataBy = DefaultSettings.getDataBy
-    
-    var intervalCurrentWeatherBackgroundUpdate: Double = 3600 //1h
-    var intervalCurrentWeatherUpdate: Double = 1200 //20m
-    var intervalForecastWeatherUpdate: Double = 86400 //24h
-    
-    var location = (0.0, 0.0)
     @AppStorage("city") var city = ""
+    var location = (0.0, 0.0)
     
     static let shared = WeatherData()
+    
+    let intervalCurrentWeatherBackgroundUpdate: Double = 3600 //1h
+    let intervalCurrentWeatherUpdate: Double = 1200 //20m
+    let intervalForecastWeatherUpdate: Double = 86400 //24h
     
     var timer: Timer?
     
@@ -58,7 +59,10 @@ class WeatherData: ObservableObject {
         }
     }
     
-    func updateAllDataByCoords(latitude: Double, longitude: Double){
+    func loadAllDataByLocation(location: CLLocation){
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
         self.location = (latitude, longitude)
         
         Task {

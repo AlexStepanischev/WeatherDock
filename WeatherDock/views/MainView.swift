@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     
-    @StateObject var data: WeatherData
+    @StateObject var data: WeatherData = WeatherData.shared
     @FocusState private var focusState: Bool
     @State private var disabled: Bool = true
     @AppStorage("city") private var city = ""    

@@ -29,19 +29,33 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     @AppStorage("showCityName") private static var showCityName = DefaultSettings.showCityName
     
     func applicationDidFinishLaunching(_ notification: Notification) {
-
-        WeatherData.shared.getAllData()
         
+        //Start tracking onWake event
         fileNotifications()
+
+        //Loading application data
+        weatherData.getAllData()
+                
+        //Setting up main pop-over view
+        setupMainView()
         
-        let menuView = ContentView(data: self.weatherData)
+        //Setting up menu item button
+        setupMenuItem()
         
+    }
+    
+    //Setting up main pop-over view
+    func setupMainView(){
+        let mainView = MainView()
         popOver.behavior = .transient
         popOver.animates = true
         
         popOver.contentViewController = NSViewController()
-        popOver.contentViewController?.view = NSHostingView(rootView: menuView)
-        
+        popOver.contentViewController?.view = NSHostingView(rootView: mainView)
+    }
+    
+    //Setting up menu item button
+    func setupMenuItem(){
         AppDelegate.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let menuButton = AppDelegate.statusItem?.button {
@@ -52,17 +66,17 @@ class AppDelegate: NSObject, NSApplicationDelegate{
             menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         
+        //Adding right click menu
         let statusBarMenu = NSMenu(title: "Status Bar Menu")
         statusBarMenu.addItem(
                     withTitle: "Quit",
                     action: #selector(AppDelegate.quit),
                     keyEquivalent: "")
 
-        //Right click menu
         menu = statusBarMenu
-        
     }
     
+    //Menu item button presentation configuration
     static func configureMenuButton(menuButton: NSStatusBarButton, title: String, systemSymbolName: String){
         menuButton.image = NSImage(systemSymbolName: systemSymbolName , accessibilityDescription: nil)
         let config = NSImage.SymbolConfiguration(textStyle: .title2)
@@ -72,6 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         menuButton.title = title
     }
     
+    //Menu item button update logic
     static func updateMenuButton(currentWeatherData: CurrentWeatherData){
         if let menuButton = AppDelegate.statusItem?.button {
             var title = ""
@@ -95,6 +110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         }
     }
     
+    //Pop-over toggling logic
     @objc func menuButtonToggle(sender: AnyObject){
         let event = NSApp.currentEvent!
 
@@ -118,18 +134,21 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         }
     }
     
+    //Quit app function
     @objc func quit() {
         NSApplication.shared.terminate(self)
     }
-    
-    @objc func onWakeNote(note: NSNotification) {
-        WeatherData.shared.getAllData()
-        WeatherData.shared.setTimer()
-    }
 
+    //Tracking onWake event
     func fileNotifications() {
         NSWorkspace.shared.notificationCenter.addObserver(
             self, selector: #selector(onWakeNote(note:)),
             name: NSWorkspace.didWakeNotification, object: nil)
+    }
+    
+    //Updating all data on onWake event and resetting update timer
+    @objc func onWakeNote(note: NSNotification) {
+        weatherData.getAllData()
+        weatherData.setTimer()
     }
 }

@@ -11,8 +11,6 @@ import SwiftUI
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
-
-    var location: CLLocationCoordinate2D?
     
     static let shared = LocationManager()
 
@@ -27,13 +25,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.last?.coordinate
         manager.stopUpdatingLocation()
         
-        let latitude = location?.latitude ?? 0.0
-        let longitude = location?.longitude ?? 0.0
+        let location = locations.last ?? CLLocation(latitude: 0.0, longitude: 0.0)
         
-        WeatherData.shared.updateAllDataByCoords(latitude: latitude, longitude: longitude)
+        WeatherData.shared.loadAllDataByLocation(location: location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Swift.Error) {
