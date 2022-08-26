@@ -1,6 +1,6 @@
 //
 //  WeatherData.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 06/05/2022.
 //
@@ -54,7 +54,7 @@ class WeatherData: ObservableObject {
             DispatchQueue.main.async {
                 self.currentWeatherData = updatedCurrentWeatherData
                 self.airPollutionData = updatedAirPollutionData
-                AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
+                AppDelegate.updateMenuButton()
             }
         }
     }
@@ -77,7 +77,7 @@ class WeatherData: ObservableObject {
                 self.airPollutionData = updatedAirPollutionData
                 self.forecastData = updatedForecastData
                 self.city = updatedCurrentWeatherData.name
-                AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
+                AppDelegate.updateMenuButton()
             }
         }
     }
@@ -93,7 +93,7 @@ class WeatherData: ObservableObject {
     func refreshView(){
         objectWillChange.send()
         updater.toggle()
-        AppDelegate.updateMenuButton(currentWeatherData: self.currentWeatherData)
+        AppDelegate.updateMenuButton()
     }
     
     func updateUIData(){
@@ -136,7 +136,7 @@ class WeatherData: ObservableObject {
                     self.airPollutionData = updatedAirPollutionData
                     self.forecastData = updatedforecastData
                     self.city = updatedCurrentWeatherData.name
-                    AppDelegate.updateMenuButton(currentWeatherData: updatedCurrentWeatherData)
+                    AppDelegate.updateMenuButton()
                 }
             }
         }

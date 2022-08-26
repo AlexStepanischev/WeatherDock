@@ -1,6 +1,6 @@
 //
-//  OpenWeatherApp.swift
-//  OpenWeather
+//  WeatherDockApp.swift
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 03/05/2022.
 //
@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     //Setting up main pop-over view
-    func setupMainView(){
+    private func setupMainView(){
         let mainView = MainView()
         popOver.behavior = .transient
         popOver.animates = true
@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     //Setting up menu item button
-    func setupMenuItem(){
+    private func setupMenuItem(){
         AppDelegate.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         
         if let menuButton = AppDelegate.statusItem?.button {
@@ -77,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     //Menu item button presentation configuration
-    static func configureMenuButton(menuButton: NSStatusBarButton, title: String, systemSymbolName: String){
+    private static func configureMenuButton(menuButton: NSStatusBarButton, title: String, systemSymbolName: String){
         menuButton.image = NSImage(systemSymbolName: systemSymbolName , accessibilityDescription: nil)
         let config = NSImage.SymbolConfiguration(textStyle: .title2)
         menuButton.image = menuButton.image?.withSymbolConfiguration(config)
@@ -87,7 +87,8 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     //Menu item button update logic
-    static func updateMenuButton(currentWeatherData: CurrentWeatherData){
+    static func updateMenuButton(){
+        let currentWeatherData = WeatherData.shared.currentWeatherData
         if let menuButton = AppDelegate.statusItem?.button {
             var title = ""
             
@@ -111,7 +112,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
     
     //Pop-over toggling logic
-    @objc func menuButtonToggle(sender: AnyObject){
+    @objc private func menuButtonToggle(sender: AnyObject){
         let event = NSApp.currentEvent!
 
         if event.type ==  NSEvent.EventType.rightMouseUp {
@@ -140,14 +141,14 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     }
 
     //Tracking onWake event
-    func fileNotifications() {
+    private func fileNotifications() {
         NSWorkspace.shared.notificationCenter.addObserver(
             self, selector: #selector(onWakeNote(note:)),
             name: NSWorkspace.didWakeNotification, object: nil)
     }
     
     //Updating all data on onWake event and resetting update timer
-    @objc func onWakeNote(note: NSNotification) {
+    @objc private func onWakeNote(note: NSNotification) {
         weatherData.getAllData()
         weatherData.setTimer()
     }
