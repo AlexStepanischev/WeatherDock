@@ -1,11 +1,12 @@
 //
 //  NetworkHelper.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 05/05/2022.
 //
 
 import SwiftUI
+import CoreLocation
 
 struct Network {
     private static let openWeatherApi = "https://api.openweathermap.org/data/2.5/"
@@ -103,5 +104,96 @@ struct Network {
         }
         
         return ""
+    }
+    
+    static func loadAllDataByLocation(location: CLLocation){
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        Task {
+            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCoordURL(lat: latitude, lon: longitude))
+            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
+            let updatedForecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
+            
+            print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            
+            DispatchQueue.main.async {
+                let weatherData = WeatherData.shared
+                weatherData.currentWeatherData = updatedCurrentWeatherData
+                weatherData.airPollutionData = updatedAirPollutionData
+                weatherData.forecastData = updatedForecastData
+                weatherData.city = updatedCurrentWeatherData.name
+                AppDelegate.updateMenuButton()
+            }
+        }
+    }
+    
+    static func loadAllDataByCity(city: String){
+        Task {
+            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCityURL(city: city))
+            
+            let latitude = updatedCurrentWeatherData.coord.lat
+            let longitude = updatedCurrentWeatherData.coord.lon
+            
+            let weatherData = WeatherData.shared
+            var location = weatherData.location
+            
+            location = CLLocation(latitude: latitude, longitude: longitude)
+            
+            //var locationOld = weatherData.locationOld
+            //locationOld = (latitude, longitude)
+            
+            let loc = (location.coordinate.latitude, location.coordinate.longitude)
+                        
+            if loc == (0.0, 0.0) {
+                DispatchQueue.main.async {
+                    weatherData.currentWeatherData = CurrentWeatherData.getEmpty()
+                    weatherData.airPollutionData = AirPollutionData.getEmpty()
+                    weatherData.forecastData = ForecastData.getEmpty()
+                    weatherData.refreshView()
+                }
+            } else {
+                let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
+                let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
+                
+                print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+                
+                DispatchQueue.main.async {
+                    weatherData.currentWeatherData = updatedCurrentWeatherData
+                    weatherData.airPollutionData = updatedAirPollutionData
+                    weatherData.forecastData = updatedforecastData
+                    weatherData.city = updatedCurrentWeatherData.name
+                    AppDelegate.updateMenuButton()
+                }
+            }
+        }
+    }
+    
+    static func refreshCurrentWeatherData() {
+        let weatherData = WeatherData.shared
+        let city = weatherData.city
+        let location = weatherData.location
+        
+        //let locationOld = weatherData.locationOld
+        
+        var url_var = Network.getCoordURL(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
+        if weatherData.getDataBy == GetDataBy.city.rawValue {
+            url_var = Network.getCityURL(city: city)
+        }
+        
+        let url = url_var
+
+        Task {
+            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: url)
+
+            print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            
+            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: updatedCurrentWeatherData.coord.lat, lon: updatedCurrentWeatherData.coord.lon))
+
+            DispatchQueue.main.async {
+                weatherData.currentWeatherData = updatedCurrentWeatherData
+                weatherData.airPollutionData = updatedAirPollutionData
+                AppDelegate.updateMenuButton()
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  ForecastData.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 07/05/2022.
 //
@@ -92,6 +92,14 @@ struct ForecastData: Codable {
             hourly: Hourly.getEmptyArray(),
             daily: Daily.getEmptyArray()
         )
+    }
+    
+    func getDaily() -> [Daily]{
+        if getDailyTrimmed().count < 7 {
+            WeatherData.shared.getAllData()
+            return getDailyTrimmedToSeven()
+        }
+        return getDailyTrimmed()
     }
 }
 

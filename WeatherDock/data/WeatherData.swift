@@ -14,9 +14,9 @@ class WeatherData: ObservableObject {
     @Published var airPollutionData = AirPollutionData.getEmpty()
     @Published var updater = true
     
-    @AppStorage("getDataBy") private var getDataBy = DefaultSettings.getDataBy
+    @AppStorage("getDataBy") var getDataBy = DefaultSettings.getDataBy
     @AppStorage("city") var city = ""
-    var location = (0.0, 0.0)
+    @Published var location = CLLocation(latitude: 0.0, longitude: 0.0)
     
     static let shared = WeatherData()
     
@@ -30,72 +30,14 @@ class WeatherData: ObservableObject {
         setTimer()
     }
     
+    //Timer for current weather data refresh
     func setTimer(){
         timer = Timer.scheduledTimer(withTimeInterval: intervalCurrentWeatherBackgroundUpdate, repeats: true, block: { _ in
             self.refreshCurrentWeatherData()
         })
     }
     
-    func refreshCurrentWeatherData() {
-        var url_var = Network.getCoordURL(lat: location.0, lon: location.1)
-        if getDataBy == GetDataBy.city.rawValue {
-            url_var = Network.getCityURL(city: city)
-        }
-        
-        let url = url_var
-
-        Task {
-            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: url)
-
-            print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
-            
-            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: updatedCurrentWeatherData.coord.lat, lon: updatedCurrentWeatherData.coord.lon))
-
-            DispatchQueue.main.async {
-                self.currentWeatherData = updatedCurrentWeatherData
-                self.airPollutionData = updatedAirPollutionData
-                AppDelegate.updateMenuButton()
-            }
-        }
-    }
-    
-    func loadAllDataByLocation(location: CLLocation){
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
-        
-        self.location = (latitude, longitude)
-        
-        Task {
-            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCoordURL(lat: latitude, lon: longitude))
-            let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
-            let updatedForecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
-            
-            print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
-            
-            DispatchQueue.main.async {
-                self.currentWeatherData = updatedCurrentWeatherData
-                self.airPollutionData = updatedAirPollutionData
-                self.forecastData = updatedForecastData
-                self.city = updatedCurrentWeatherData.name
-                AppDelegate.updateMenuButton()
-            }
-        }
-    }
-    
-    func getDaily() -> [Daily]{
-        if forecastData.getDailyTrimmed().count < 7 {
-            getAllData()
-            return forecastData.getDailyTrimmedToSeven()
-        }
-        return forecastData.getDailyTrimmed()
-    }
-    
-    func refreshView(){
-        objectWillChange.send()
-        updater.toggle()
-        AppDelegate.updateMenuButton()
-    }
-    
+    //Updates data according to update intervals
     func updateUIData(){
         if forecastData.getHourlyTrimmed().count < 24 || forecastData.getDailyTrimmed().count < 7 {
             getAllData()
@@ -109,47 +51,38 @@ class WeatherData: ObservableObject {
         }
     }
     
-    func getDataByCity(){
-        Task {
-            let updatedCurrentWeatherData = await Network.getCurrentWeatherData(url: Network.getCityURL(city: city))
-            
-            let latitude = updatedCurrentWeatherData.coord.lat
-            let longitude = updatedCurrentWeatherData.coord.lon
-            
-            location = (latitude, longitude)
-            
-            if location == (0.0, 0.0) {
-                DispatchQueue.main.async {
-                    self.currentWeatherData = CurrentWeatherData.getEmpty()
-                    self.airPollutionData = AirPollutionData.getEmpty()
-                    self.forecastData = ForecastData.getEmpty()
-                    self.refreshView()
-                }
-            } else {
-                let updatedAirPollutionData = await Network.getAirPollutionData(url: Network.getAirPollutionUrl(lat: latitude, lon: longitude))
-                let updatedforecastData = await Network.getForecastData(url: Network.getOneCallUrl(lat: latitude, lon: longitude))
-                
-                print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
-                
-                DispatchQueue.main.async {
-                    self.currentWeatherData = updatedCurrentWeatherData
-                    self.airPollutionData = updatedAirPollutionData
-                    self.forecastData = updatedforecastData
-                    self.city = updatedCurrentWeatherData.name
-                    AppDelegate.updateMenuButton()
-                }
-            }
-        }
+    //Main view and button refresher
+    func refreshView(){
+        objectWillChange.send()
+        updater.toggle()
+        AppDelegate.updateMenuButton()
     }
     
+    //Getting all data based on location or city name
     func getAllData(){
         if getDataBy == GetDataBy.location.rawValue {
             LocationManager.shared.getDataByLocation()
             print("Get all data by location")
         } else {
-            getDataByCity()
+            loadAllDataByCity()
             print("Get all data by city")
         }
     }
     
+    //Calling API for loading all data by location
+    func loadAllDataByLocation(location: CLLocation){
+        self.location = location
+        
+        Network.loadAllDataByLocation(location: location)
+    }
+    
+    //Calling API for loading all data by city name
+    private func loadAllDataByCity(){
+        Network.loadAllDataByCity(city: city)
+    }
+    
+    //Calling API for refreshing current weather data
+    func refreshCurrentWeatherData() {
+        Network.refreshCurrentWeatherData()
+    }
 }

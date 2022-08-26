@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 03/05/2022.
 //
@@ -78,7 +78,7 @@ struct MainView: View {
             
             Divider()
 
-            ForecastView(forecastData: data.forecastData, daily: data.getDaily(), updater: $data.updater)
+            ForecastView(forecastData: data.forecastData, daily: data.forecastData.getDaily(), updater: $data.updater)
         }
         .frame(width: 430)
         .onTapGesture {
