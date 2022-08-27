@@ -1,6 +1,6 @@
 //
 //  CurrentWeatherView.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 05/05/2022.
 //
@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CurrentWeatherView: View {
-    var data: CurrentWeatherData
-    var aqi: AirPollutionData
+    
+    @StateObject var data: WeatherData = WeatherData.shared
     @Binding var updater: Bool
     @State var isPopover = false
     
@@ -17,25 +17,25 @@ struct CurrentWeatherView: View {
         VStack{
             HStack{
                 HStack(alignment: .top){
-                    Image(systemName: Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)).font(Font.system(size: 40, weight: .bold))
-                    Text("\(Int(data.main.temp.rounded()))°\(Utils.getTempMeasurement())").font(Font.system(size: 30, weight: .bold))
+                    Image(systemName: Utils.getIconByTimeConditionId(id: data.currentWeatherData.weather[0].id, dt: data.currentWeatherData.dt)).font(Font.system(size: 40, weight: .bold))
+                    Text("\(Int(data.currentWeatherData.main.temp.rounded()))°\(Utils.getTempMeasurement())").font(Font.system(size: 30, weight: .bold))
                         .frame(width: 90)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
-                    Text(data.weather[0].description.firstCapitalized).font(.title2)
-                    Text("FEELS LIKE \(Int(data.main.feels_like.rounded()))°\(Utils.getTempMeasurement())").font(.footnote)
+                    Text(data.currentWeatherData.weather[0].description.firstCapitalized).font(.title2)
+                    Text("FEELS LIKE \(Int(data.currentWeatherData.main.feels_like.rounded()))°\(Utils.getTempMeasurement())").font(.footnote)
                 }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
                             .help("Sunrise")
-                        Text(Utils.getLongTimefromUnix(dt: data.sys.sunrise, timezone: data.timezone))
+                        Text(Utils.getLongTimefromUnix(dt: data.currentWeatherData.sys.sunrise, timezone: data.currentWeatherData.timezone))
                             .help("Sunrise")
                     }.padding(.bottom, 1)
                     HStack{
                         Image(systemName: "sunset").font(Font.system(size: 15))
                             .help("Sunset")
-                        Text(Utils.getLongTimefromUnix(dt: data.sys.sunset, timezone: data.timezone))
+                        Text(Utils.getLongTimefromUnix(dt: data.currentWeatherData.sys.sunset, timezone: data.currentWeatherData.timezone))
                             .help("Sunset")
                     }
                 }
@@ -45,30 +45,30 @@ struct CurrentWeatherView: View {
                 HStack{
                     Image(systemName: "humidity").font(Font.system(size: 15, weight: .bold))
                         .help("Humidity")
-                    Text("\(data.main.humidity)%").font(.headline)
+                    Text("\(data.currentWeatherData.main.humidity)%").font(.headline)
                         .help("Humidity")
                 }.padding(.horizontal)
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
                         .help("Wind speed")
-                    Text("\(Int(data.wind.speed.rounded())) \(Utils.getSpeedMeasurement())").font(.headline)
+                    Text("\(Int(data.currentWeatherData.wind.speed.rounded())) \(Utils.getSpeedMeasurement())").font(.headline)
                         .help("Wind speed")
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
                         .help("Pressure")
-                    Text(Utils.getPressureValueUnit(hPa: data.main.pressure)).font(.headline)
+                    Text(Utils.getPressureValueUnit(hPa: data.currentWeatherData.main.pressure)).font(.headline)
                         .help("Pressure")
                 }.padding(.trailing)
-                if aqi.list.count > 0 {
+                if data.airPollutionData.list.count > 0 {
                     HStack{
-                        Image(systemName: Utils.aqi[aqi.list[0].main.aqi]?.1 ?? "aqi.low").font(Font.system(size: 15, weight: .bold))
+                        Image(systemName: Utils.aqi[data.airPollutionData.list[0].main.aqi]?.1 ?? "aqi.low").font(Font.system(size: 15, weight: .bold))
                             .help("Air quality")
-                        Text(Utils.aqi[aqi.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
+                        Text(Utils.aqi[data.airPollutionData.list[0].main.aqi]?.0 ?? "Unknown").font(.headline)
                             .help("Air quality")
                             .padding(.trailing)
                     }.popover(isPresented: self.$isPopover, arrowEdge: .trailing) {
-                        AQPopoverView(components: aqi.list[0].components)
+                        AQPopoverView(components: data.airPollutionData.list[0].components)
                     }
                     .onHover { hover in
                         self.isPopover = hover

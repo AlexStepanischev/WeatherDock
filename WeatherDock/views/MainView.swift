@@ -17,30 +17,11 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            HStack{
-                Button {
-                    data.refreshCurrentWeatherData()
-                } label: {
-                    Image(systemName: "arrow.clockwise")
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.leading)
-                Spacer()
-                Text(Utils.getDate(dt: data.currentWeatherData.dt, timezone: data.currentWeatherData.timezone)).font(.title2).padding(.bottom, 1)
-                Spacer()
-                Button {
-                    NSApp.activate(ignoringOtherApps: true)
-                    if #available(macOS 13, *) {
-                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                    } else {
-                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                    }
-                } label: {
-                    Image(systemName: "gearshape")
-                }
-                .buttonStyle(PlainButtonStyle())
-                .padding(.trailing)
-            }.padding(.top)
+            
+            //Header view with date, refresh and setting buttons
+            HeaderView(updater: $data.updater)
+            
+            //Location and city name line, should be in Main view due to some global focusing logic
             HStack(){
                 Button {
                     getDataBy = GetDataBy.location.rawValue
@@ -60,9 +41,9 @@ struct MainView: View {
                         }
                 ).textFieldStyle(PlainTextFieldStyle())
                 .onSubmit {
-                    WeatherData.shared.city = city
+                    data.city = city
                     getDataBy = GetDataBy.city.rawValue
-                    WeatherData.shared.getAllData()
+                    data.getAllData()
                 }
                 .focused($focusState, equals: false)
                 .disabled(disabled)
@@ -77,11 +58,13 @@ struct MainView: View {
    
             }.padding(.top, 5)
             
-            CurrentWeatherView(data: data.currentWeatherData, aqi: data.airPollutionData, updater: $data.updater)
+            //Current weather view
+            CurrentWeatherView(updater: $data.updater)
             
             Divider()
 
-            ForecastView(forecastData: data.forecastData, daily: data.forecastData.getDaily(), updater: $data.updater)
+            //Forecast view including hourly and daily forecsats
+            ForecastView(updater: $data.updater)
         }
         .frame(width: 430)
         .onTapGesture {

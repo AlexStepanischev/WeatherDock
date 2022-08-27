@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24ABA43828BA26D300AF848D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA43728BA26D300AF848D /* HeaderView.swift */; };
 		E261C3D7283283F40048B5DE /* WeatherDockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3D6283283F40048B5DE /* WeatherDockApp.swift */; };
 		E261C3DB283283F50048B5DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E261C3DA283283F50048B5DE /* Assets.xcassets */; };
 		E261C3DE283283F50048B5DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E261C3DD283283F50048B5DE /* Preview Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		24ABA43728BA26D300AF848D /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		E261C3D3283283F40048B5DE /* WeatherDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E261C3D6283283F40048B5DE /* WeatherDockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDockApp.swift; sourceTree = "<group>"; };
 		E261C3DA283283F50048B5DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				E261C3F8283285100048B5DE /* CurrentWeatherView.swift */,
 				E261C3F9283285100048B5DE /* ForecastView.swift */,
 				E261C3FA283285100048B5DE /* MainView.swift */,
+				24ABA43728BA26D300AF848D /* HeaderView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -212,7 +215,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					E261C3D2283283F40048B5DE = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -260,6 +263,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		E2A0AAF62837AB0A002AFACF /* Copy “Launch at Login Helper” */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -289,6 +293,7 @@
 				E261C402283285100048B5DE /* LocationManager.swift in Sources */,
 				E261C401283285100048B5DE /* Utils.swift in Sources */,
 				E261C400283285100048B5DE /* OpenWeather.swift in Sources */,
+				24ABA43828BA26D300AF848D /* HeaderView.swift in Sources */,
 				E261C3FE283285100048B5DE /* DefaultSettings.swift in Sources */,
 				E261C3FD283285100048B5DE /* CurrentWeatherData.swift in Sources */,
 				E261C3FC283285100048B5DE /* ForecastData.swift in Sources */,
@@ -338,6 +343,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -398,6 +404,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -428,6 +435,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherDock/Preview Content\"";
 				DEVELOPMENT_TEAM = CT76ZJ5MHM;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -460,6 +468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 5;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherDock/Preview Content\"";
 				DEVELOPMENT_TEAM = CT76ZJ5MHM;
 				ENABLE_HARDENED_RUNTIME = YES;

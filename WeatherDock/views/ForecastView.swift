@@ -1,6 +1,6 @@
 //
 //  ForecastView.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 07/05/2022.
 //
@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ForecastView: View {
-    var forecastData: ForecastData
-    var daily: [Daily]
+    
+    @StateObject var weatherData: WeatherData = WeatherData.shared    
     @Binding var updater: Bool
     @State var hoverState = false
     @State var hoverID = ""
     var body: some View {
         ScrollView(.horizontal){
             HStack(alignment: .top){
-                ForEach(forecastData.getHourlyTrimmed()){ data in
+                ForEach(weatherData.forecastData.getHourlyTrimmed()){ data in
                     VStack{
                         Text("\(Int(data.temp.rounded()))°\(Utils.getTempMeasurement())").font(.headline)
                         HStack(spacing: 1) {
@@ -26,7 +26,7 @@ struct ForecastView: View {
                                 .help("Probability of precipitation")
                         }
                         Image(systemName: Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)).font(.title).frame(height: 15)
-                        Text(Utils.getTimefromUnix(dt: data.dt, timezone: forecastData.timezone_offset)).font(.subheadline).padding(.top, 2)
+                        Text(Utils.getTimefromUnix(dt: data.dt, timezone: weatherData.forecastData.timezone_offset)).font(.subheadline).padding(.top, 2)
                     }.padding(.leading)
                 }
             }.padding(.bottom).padding(.trailing)
@@ -36,8 +36,8 @@ struct ForecastView: View {
         Divider()
         
         HStack(spacing: 25){
-            ForEach(daily){ data in
-                let dayDate = Utils.getDayDate(dt: data.dt, timezone: forecastData.timezone_offset)
+            ForEach(weatherData.forecastData.getDaily()){ data in
+                let dayDate = Utils.getDayDate(dt: data.dt, timezone: weatherData.forecastData.timezone_offset)
                 VStack{
                     Text(dayDate.0.uppercased()).font(.headline)
                     Text(dayDate.1).font(.caption).padding(.bottom, 5)
@@ -51,7 +51,7 @@ struct ForecastView: View {
                     }
                 }
                 .popover(isPresented: self.makeIsPresented(id: dayDate.1), arrowEdge: .bottom) {
-                    DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: forecastData.timezone_offset)
+                    DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: weatherData.forecastData.timezone_offset)
                 }
                 .onHover { hover in
                     self.hoverID = dayDate.1
