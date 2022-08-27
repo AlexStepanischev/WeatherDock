@@ -30,8 +30,11 @@ struct MainView: View {
                 Spacer()
                 Button {
                     NSApp.activate(ignoringOtherApps: true)
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-
+                    if #available(macOS 13, *) {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    } else {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    }
                 } label: {
                     Image(systemName: "gearshape")
                 }
