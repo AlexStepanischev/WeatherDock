@@ -73,16 +73,16 @@ class WeatherData: ObservableObject {
     func loadAllDataByLocation(location: CLLocation){
         self.location = location
         
-        Network.loadAllDataByLocation(location: location)
+        OpenWeather.loadAllDataByLocation(location: location)
     }
     
     //Calling API for loading all data by city name
     private func loadAllDataByCity(){
-        Network.loadAllDataByCity(city: city)
+        OpenWeather.loadAllDataByCity(city: city)
     }
     
     //Calling API for refreshing current weather data
     func refreshCurrentWeatherData() {
-        Network.refreshCurrentWeatherData()
+        OpenWeather.refreshCurrentWeatherData()
     }
 }
