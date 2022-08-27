@@ -12,87 +12,46 @@ struct OpenWeather {
     private static let openWeatherApi = "https://api.openweathermap.org/data/2.5/"
     @AppStorage("unitsOfMeasurement") private static var unitsOfMeasurement = DefaultSettings.unitsOfMeasurement
     
-    static func getCoordURL(lat: Double, lon: Double) -> URL {
-        let latitude = String(format: "%f", lat)
-        let longitude = String(format: "%f", lon)
+    //Building url for getting current weather by location
+    private static func getCurrentWeatherByLocationURL(location: CLLocation) -> URL {
+        let latitude = String(format: "%f", location.coordinate.latitude)
+        let longitude = String(format: "%f", location.coordinate.longitude)
         
         let url_string = "\(openWeatherApi)weather?lat=\(latitude)&lon=\(longitude)&appid=\(getApiKey())&units=\(unitsOfMeasurement)"
 
-        let url = URL(string: url_string)!
-        return url
+        return URL(string: url_string)!
     }
     
-    static func getCityURL(city: String) -> URL {
+    //Building url for getting current weather by city name
+    private static func getCurrentWeatherByCityURL(city: String) -> URL {
         let city_escaped = city.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
         let url_string = "\(openWeatherApi)weather?q=\(city_escaped)&appid=\(getApiKey())&units=\(unitsOfMeasurement)"
         
-        let url = URL(string: url_string)!
-        return url
+        return URL(string: url_string)!
     }
     
-    static func getOneCallUrl(lat: Double, lon: Double) -> URL {
-        let latitude = String(format: "%f", lat)
-        let longitude = String(format: "%f", lon)
+    //Building url for getting hourly and daily forecasts via OneCall API
+    private static func getOneCallUrl(location: CLLocation) -> URL {
+        let latitude = String(format: "%f", location.coordinate.latitude)
+        let longitude = String(format: "%f", location.coordinate.longitude)
         
         let url_string = "\(openWeatherApi)onecall?lat=\(latitude)&lon=\(longitude)&appid=\(getApiKey())&units=\(unitsOfMeasurement)&exclude=current,minutely,alerts"
 
-        let url = URL(string: url_string)!
-        return url
+        return URL(string: url_string)!
     }
     
-    static func getAirPollutionUrl(lat: Double, lon: Double) -> URL {
-        let latitude = String(format: "%f", lat)
-        let longitude = String(format: "%f", lon)
+    //Building url for getting air pollution data
+    private static func getAirPollutionUrl(location: CLLocation) -> URL {
+        let latitude = String(format: "%f", location.coordinate.latitude)
+        let longitude = String(format: "%f", location.coordinate.longitude)
         
         let url_string = "\(openWeatherApi)air_pollution?lat=\(latitude)&lon=\(longitude)&appid=\(getApiKey())"
 
-        let url = URL(string: url_string)!
-        return url
+        return URL(string: url_string)!
     }
     
-    static func getCurrentWeatherData(url: URL) async -> CurrentWeatherData {
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(CurrentWeatherData.self, from: data){
-                return decodedResponse
-            }
-        } catch {
-            print("Issues with getting data form API")
-            print(error)
-        }
-        return CurrentWeatherData.getEmpty()
-    }
-    
-    static func getAirPollutionData(url: URL) async -> AirPollutionData {
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(AirPollutionData.self, from: data){
-                return decodedResponse
-            }
-        } catch {
-            print("Issues with getting data form API")
-            print(error)
-        }
-        return AirPollutionData.getEmpty()
-    }
-    
-    static func getForecastData(url: URL) async -> ForecastData {
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            if let decodedResponse = try? JSONDecoder().decode(ForecastData.self, from: data){
-                return decodedResponse
-            }
-        } catch {
-            print("Issues with getting data form API")
-            print(error)
-        }
-        return ForecastData.getEmpty()
-    }
-    
-    static func getApiKey() -> String {
+    //Getting API Key form keys.plist
+    private static func getApiKey() -> String {
         var keys: NSDictionary?
         
         if let path = Bundle.main.path(forResource: "keys", ofType: "plist") {
@@ -106,15 +65,14 @@ struct OpenWeather {
         return ""
     }
     
+    //Loading all data by location
     static func loadAllDataByLocation(location: CLLocation){
-        let latitude = location.coordinate.latitude
-        let longitude = location.coordinate.longitude
         Task {
-            let updatedCurrentWeatherData = await OpenWeather.getCurrentWeatherData(url: OpenWeather.getCoordURL(lat: latitude, lon: longitude))
-            let updatedAirPollutionData = await OpenWeather.getAirPollutionData(url: OpenWeather.getAirPollutionUrl(lat: latitude, lon: longitude))
-            let updatedForecastData = await OpenWeather.getForecastData(url: OpenWeather.getOneCallUrl(lat: latitude, lon: longitude))
+            let updatedCurrentWeatherData = await getCurrentWeatherData(url: getCurrentWeatherByLocationURL(location: location))
+            let updatedAirPollutionData = await getAirPollutionData(location: location)
+            let updatedForecastData = await getForecastData(location: location)
             
-            print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            print("All weather updated by location at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
             DispatchQueue.main.async {
                 let weatherData = WeatherData.shared
@@ -127,24 +85,17 @@ struct OpenWeather {
         }
     }
     
+    //Loading all data by city, if city is unknown returns zero data
     static func loadAllDataByCity(city: String){
         Task {
-            let updatedCurrentWeatherData = await OpenWeather.getCurrentWeatherData(url: OpenWeather.getCityURL(city: city))
-            
-            let latitude = updatedCurrentWeatherData.coord.lat
-            let longitude = updatedCurrentWeatherData.coord.lon
+            let updatedCurrentWeatherData = await OpenWeather.getCurrentWeatherData(url: getCurrentWeatherByCityURL(city: city))
             
             let weatherData = WeatherData.shared
             var location = weatherData.location
             
-            location = CLLocation(latitude: latitude, longitude: longitude)
-            
-            //var locationOld = weatherData.locationOld
-            //locationOld = (latitude, longitude)
-            
-            let loc = (location.coordinate.latitude, location.coordinate.longitude)
+            location = CLLocation(latitude: updatedCurrentWeatherData.coord.lat, longitude: updatedCurrentWeatherData.coord.lon)
                         
-            if loc == (0.0, 0.0) {
+            if (location.coordinate.latitude, location.coordinate.longitude) == (0.0, 0.0) {
                 DispatchQueue.main.async {
                     weatherData.currentWeatherData = CurrentWeatherData.getEmpty()
                     weatherData.airPollutionData = AirPollutionData.getEmpty()
@@ -152,10 +103,10 @@ struct OpenWeather {
                     weatherData.refreshView()
                 }
             } else {
-                let updatedAirPollutionData = await OpenWeather.getAirPollutionData(url: OpenWeather.getAirPollutionUrl(lat: latitude, lon: longitude))
-                let updatedforecastData = await OpenWeather.getForecastData(url: OpenWeather.getOneCallUrl(lat: latitude, lon: longitude))
+                let updatedAirPollutionData = await getAirPollutionData(location: location)
+                let updatedforecastData = await getForecastData(location: location)
                 
-                print("All weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+                print("All weather updated by city at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
                 
                 DispatchQueue.main.async {
                     weatherData.currentWeatherData = updatedCurrentWeatherData
@@ -168,32 +119,80 @@ struct OpenWeather {
         }
     }
     
+    //Refreshing current weather data based on GetDataBy setting
     static func refreshCurrentWeatherData() {
         let weatherData = WeatherData.shared
         let city = weatherData.city
         let location = weatherData.location
-        
-        //let locationOld = weatherData.locationOld
-        
-        var url_var = OpenWeather.getCoordURL(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
+                
+        var url_var = getCurrentWeatherByLocationURL(location: location)
         if weatherData.getDataBy == GetDataBy.city.rawValue {
-            url_var = OpenWeather.getCityURL(city: city)
+            url_var = getCurrentWeatherByCityURL(city: city)
         }
         
         let url = url_var
 
         Task {
-            let updatedCurrentWeatherData = await OpenWeather.getCurrentWeatherData(url: url)
+            let updatedCurrentWeatherData = await getCurrentWeatherData(url: url)
+            let new_location = CLLocation(latitude: updatedCurrentWeatherData.coord.lat, longitude: updatedCurrentWeatherData.coord.lon)
 
             print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
-            let updatedAirPollutionData = await OpenWeather.getAirPollutionData(url: OpenWeather.getAirPollutionUrl(lat: updatedCurrentWeatherData.coord.lat, lon: updatedCurrentWeatherData.coord.lon))
+            let updatedAirPollutionData = await getAirPollutionData(location: new_location)
 
             DispatchQueue.main.async {
                 weatherData.currentWeatherData = updatedCurrentWeatherData
                 weatherData.airPollutionData = updatedAirPollutionData
+                weatherData.location = new_location
                 AppDelegate.updateMenuButton()
             }
         }
+    }
+    
+    //Performs Api call and data decoding for current weather data, returns zero data in case of error
+    private static func getCurrentWeatherData(url: URL) async -> CurrentWeatherData {
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(CurrentWeatherData.self, from: data){
+                return decodedResponse
+            }
+        } catch {
+            print("Issues with getting data form API")
+            print(error)
+        }
+        return CurrentWeatherData.getEmpty()
+    }
+    
+    //Performs Api call and data decoding for air pollution data, returns zero data in case of error
+    private static func getAirPollutionData(location: CLLocation) async -> AirPollutionData {
+        let url = getAirPollutionUrl(location: location)
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(AirPollutionData.self, from: data){
+                return decodedResponse
+            }
+        } catch {
+            print("Issues with getting data form API")
+            print(error)
+        }
+        return AirPollutionData.getEmpty()
+    }
+    
+    //Performs Api call and data decoding for one call forecast data, returns zero data in case of error
+    private static func getForecastData(location: CLLocation) async -> ForecastData {
+        let url = getOneCallUrl(location: location)
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            if let decodedResponse = try? JSONDecoder().decode(ForecastData.self, from: data){
+                return decodedResponse
+            }
+        } catch {
+            print("Issues with getting data form API")
+            print(error)
+        }
+        return ForecastData.getEmpty()
     }
 }
