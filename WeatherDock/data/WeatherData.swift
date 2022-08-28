@@ -9,6 +9,8 @@ import SwiftUI
 import CoreLocation
 
 class WeatherData: ObservableObject {
+    @Published var currentWeather = CurrentWeather()
+    
     @Published var currentWeatherData = CurrentWeatherData.getEmpty()
     @Published var forecastData = ForecastData.getEmpty()
     @Published var airPollutionData = AirPollutionData.getEmpty()

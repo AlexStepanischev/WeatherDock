@@ -77,6 +77,7 @@ struct OpenWeather {
             DispatchQueue.main.async {
                 let weatherData = WeatherData.shared
                 weatherData.currentWeatherData = updatedCurrentWeatherData
+                updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 weatherData.airPollutionData = updatedAirPollutionData
                 weatherData.forecastData = updatedForecastData
                 weatherData.city = updatedCurrentWeatherData.name
@@ -110,6 +111,7 @@ struct OpenWeather {
                 
                 DispatchQueue.main.async {
                     weatherData.currentWeatherData = updatedCurrentWeatherData
+                    updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                     weatherData.airPollutionData = updatedAirPollutionData
                     weatherData.forecastData = updatedforecastData
                     weatherData.city = updatedCurrentWeatherData.name
@@ -142,6 +144,7 @@ struct OpenWeather {
 
             DispatchQueue.main.async {
                 weatherData.currentWeatherData = updatedCurrentWeatherData
+                updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 weatherData.airPollutionData = updatedAirPollutionData
                 weatherData.location = new_location
                 AppDelegate.updateMenuButton()
@@ -194,5 +197,24 @@ struct OpenWeather {
             print(error)
         }
         return ForecastData.getEmpty()
+    }
+    
+    private static func updateCurrentWeatherWith(data: CurrentWeatherData){
+        var newCurrentWeather = CurrentWeather()
+        newCurrentWeather.dt = data.dt
+        newCurrentWeather.timezone = data.timezone
+        newCurrentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
+        newCurrentWeather.temperature = Int(data.main.temp.rounded())
+        newCurrentWeather.temp_unit = Utils.getTempMeasurement()
+        newCurrentWeather.description = data.weather[0].description.firstCapitalized
+        newCurrentWeather.feels_like = Int(data.main.feels_like.rounded())
+        newCurrentWeather.sunrise = Utils.getLongTimefromUnix(dt: data.sys.sunrise, timezone: data.timezone)
+        newCurrentWeather.sunset = Utils.getLongTimefromUnix(dt: data.sys.sunset, timezone: data.timezone)
+        newCurrentWeather.humidity = data.main.humidity
+        newCurrentWeather.wind_speed = Int(data.wind.speed.rounded())
+        newCurrentWeather.wind_unit = Utils.getSpeedMeasurement()
+        newCurrentWeather.pressure = data.main.pressure
+        
+        WeatherData.shared.currentWeather = newCurrentWeather
     }
 }
