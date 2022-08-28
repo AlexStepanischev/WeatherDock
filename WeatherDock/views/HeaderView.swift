@@ -9,20 +9,23 @@ import SwiftUI
 
 struct HeaderView: View {
     
-    @StateObject var data: WeatherData = WeatherData.shared
+    @StateObject var weatherData: WeatherData = WeatherData.shared
     @Binding var updater: Bool
     
     var body: some View {
+        
+        let currentWeather = weatherData.currentWeather
+        
         HStack{
             Button {
-                data.refreshCurrentWeatherData()
+                weatherData.refreshCurrentWeatherData()
             } label: {
                 Image(systemName: "arrow.clockwise")
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.leading)
             Spacer()
-            Text(Utils.getDate(dt: data.currentWeatherData.dt, timezone: data.currentWeatherData.timezone)).font(.title2).padding(.bottom, 1)
+            Text(Utils.getDate(dt: currentWeather.dt, timezone: currentWeather.timezone)).font(.title2).padding(.bottom, 1)
             Spacer()
             Button {
                 NSApp.activate(ignoringOtherApps: true)

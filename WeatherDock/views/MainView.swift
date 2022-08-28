@@ -72,7 +72,7 @@ struct MainView: View {
                 NSApp.keyWindow?.makeFirstResponder(nil)
             }
             focusState = false
-            city = data.currentWeatherData.name
+            city = data.currentWeather.city
         }
     }
 }

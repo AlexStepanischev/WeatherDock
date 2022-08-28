@@ -11,7 +11,6 @@ import CoreLocation
 class WeatherData: ObservableObject {
     @Published var currentWeather = CurrentWeather()
     
-    @Published var currentWeatherData = CurrentWeatherData.getEmpty()
     @Published var forecastData = ForecastData.getEmpty()
     @Published var airPollutionData = AirPollutionData.getEmpty()
     @Published var updater = true
@@ -45,7 +44,7 @@ class WeatherData: ObservableObject {
             getAllData()
         } else if forecastData.hourly[0].dt < Date.now.timeIntervalSince1970 - intervalForecastWeatherUpdate {
             getAllData()
-        } else if currentWeatherData.dt < Date.now.timeIntervalSince1970 - intervalCurrentWeatherUpdate {
+        } else if currentWeather.dt < Date.now.timeIntervalSince1970 - intervalCurrentWeatherUpdate {
             refreshCurrentWeatherData()
             refreshView()
         } else {

@@ -60,8 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         
         if let menuButton = AppDelegate.statusItem?.button {
             AppDelegate.configureMenuButton(menuButton: menuButton, title: "--°\(Utils.getTempMeasurement())",
-                                            systemSymbolName: Utils.getIconByTimeConditionId(id: weatherData.currentWeatherData.weather[0].id,
-                                                                                         dt: weatherData.currentWeatherData.dt))
+                                            systemSymbolName: weatherData.currentWeather.icon)
             menuButton.action = #selector(menuButtonToggle)
             menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
@@ -88,26 +87,26 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     
     //Menu item button update logic
     static func updateMenuButton(){
-        let currentWeatherData = WeatherData.shared.currentWeatherData
+        let currentWeather = WeatherData.shared.currentWeather
         if let menuButton = AppDelegate.statusItem?.button {
             var title = ""
             
             if showTemperature {
-                title += "\(Int(currentWeatherData.main.temp.rounded()))°\(Utils.getTempMeasurement())"
+                title += "\(currentWeather.temperature)°\(currentWeather.temp_unit)"
             }
             
-            if showDescription && currentWeatherData.weather[0].main != "No data"  {
-                title += " \(currentWeatherData.weather[0].main)"
+            if showDescription && currentWeather.short_desc != "No data"  {
+                title += " \(currentWeather.short_desc)"
             }
             
-            if showCityName && currentWeatherData.name != "Unknown City" {
+            if showCityName && currentWeather.city != "Unknown City" {
                 if showDescription {
                     title += ","
                 }
-                title += " \(currentWeatherData.name)"
+                title += " \(currentWeather.city)"
             }
             
-            configureMenuButton(menuButton: menuButton, title: title, systemSymbolName: Utils.getIconByTimeConditionId(id: currentWeatherData.weather[0].id, dt:currentWeatherData.dt))
+            configureMenuButton(menuButton: menuButton, title: title, systemSymbolName: currentWeather.icon)
         }
     }
     

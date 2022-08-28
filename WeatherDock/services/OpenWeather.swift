@@ -76,7 +76,6 @@ struct OpenWeather {
             
             DispatchQueue.main.async {
                 let weatherData = WeatherData.shared
-                weatherData.currentWeatherData = updatedCurrentWeatherData
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 weatherData.airPollutionData = updatedAirPollutionData
                 weatherData.forecastData = updatedForecastData
@@ -98,7 +97,7 @@ struct OpenWeather {
                         
             if (location.coordinate.latitude, location.coordinate.longitude) == (0.0, 0.0) {
                 DispatchQueue.main.async {
-                    weatherData.currentWeatherData = CurrentWeatherData.getEmpty()
+                    updateCurrentWeatherWith(data: CurrentWeatherData.getEmpty())
                     weatherData.airPollutionData = AirPollutionData.getEmpty()
                     weatherData.forecastData = ForecastData.getEmpty()
                     weatherData.refreshView()
@@ -110,7 +109,6 @@ struct OpenWeather {
                 print("All weather updated by city at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
                 
                 DispatchQueue.main.async {
-                    weatherData.currentWeatherData = updatedCurrentWeatherData
                     updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                     weatherData.airPollutionData = updatedAirPollutionData
                     weatherData.forecastData = updatedforecastData
@@ -143,7 +141,6 @@ struct OpenWeather {
             let updatedAirPollutionData = await getAirPollutionData(location: new_location)
 
             DispatchQueue.main.async {
-                weatherData.currentWeatherData = updatedCurrentWeatherData
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 weatherData.airPollutionData = updatedAirPollutionData
                 weatherData.location = new_location
@@ -199,22 +196,25 @@ struct OpenWeather {
         return ForecastData.getEmpty()
     }
     
+    //Updating current weather data with received data
     private static func updateCurrentWeatherWith(data: CurrentWeatherData){
         var newCurrentWeather = CurrentWeather()
         newCurrentWeather.dt = data.dt
         newCurrentWeather.timezone = data.timezone
-        newCurrentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
         newCurrentWeather.temperature = Int(data.main.temp.rounded())
         newCurrentWeather.temp_unit = Utils.getTempMeasurement()
         newCurrentWeather.description = data.weather[0].description.firstCapitalized
+        newCurrentWeather.short_desc = data.weather[0].main
         newCurrentWeather.feels_like = Int(data.main.feels_like.rounded())
-        newCurrentWeather.sunrise = Utils.getLongTimefromUnix(dt: data.sys.sunrise, timezone: data.timezone)
-        newCurrentWeather.sunset = Utils.getLongTimefromUnix(dt: data.sys.sunset, timezone: data.timezone)
+        newCurrentWeather.sunrise = data.sys.sunrise
+        newCurrentWeather.sunset = data.sys.sunset
         newCurrentWeather.humidity = data.main.humidity
         newCurrentWeather.wind_speed = Int(data.wind.speed.rounded())
         newCurrentWeather.wind_unit = Utils.getSpeedMeasurement()
         newCurrentWeather.pressure = data.main.pressure
+        newCurrentWeather.city = data.name
         
         WeatherData.shared.currentWeather = newCurrentWeather
+        WeatherData.shared.currentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
     }
 }

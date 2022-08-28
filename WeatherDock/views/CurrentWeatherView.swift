@@ -32,13 +32,13 @@ struct CurrentWeatherView: View {
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
                             .help("Sunrise")
-                        Text(currentWeather.sunrise)
+                        Text(currentWeather.getSunriseFormatted())
                             .help("Sunrise")
                     }.padding(.bottom, 1)
                     HStack{
                         Image(systemName: "sunset").font(Font.system(size: 15))
                             .help("Sunset")
-                        Text(currentWeather.sunset)
+                        Text(currentWeather.getSunsetFormatted())
                             .help("Sunset")
                     }
                 }
