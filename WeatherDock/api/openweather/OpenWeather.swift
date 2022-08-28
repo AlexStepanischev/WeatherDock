@@ -97,7 +97,7 @@ struct OpenWeather {
                         
             if (location.coordinate.latitude, location.coordinate.longitude) == (0.0, 0.0) {
                 DispatchQueue.main.async {
-                    updateCurrentWeatherWith(data: CurrentWeatherData.getEmpty())
+                    updateCurrentWeatherWith(data: CurrentWeatherResponse.getEmpty())
                     weatherData.airPollutionData = AirPollutionData.getEmpty()
                     weatherData.forecastData = ForecastData.getEmpty()
                     weatherData.refreshView()
@@ -150,18 +150,18 @@ struct OpenWeather {
     }
     
     //Performs Api call and data decoding for current weather data, returns zero data in case of error
-    private static func getCurrentWeatherData(url: URL) async -> CurrentWeatherData {
+    private static func getCurrentWeatherData(url: URL) async -> CurrentWeatherResponse {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(CurrentWeatherData.self, from: data){
+            if let decodedResponse = try? JSONDecoder().decode(CurrentWeatherResponse.self, from: data){
                 return decodedResponse
             }
         } catch {
             print("Issues with getting data form API")
             print(error)
         }
-        return CurrentWeatherData.getEmpty()
+        return CurrentWeatherResponse.getEmpty()
     }
     
     //Performs Api call and data decoding for air pollution data, returns zero data in case of error
@@ -197,7 +197,7 @@ struct OpenWeather {
     }
     
     //Updating current weather data with received data
-    private static func updateCurrentWeatherWith(data: CurrentWeatherData){
+    private static func updateCurrentWeatherWith(data: CurrentWeatherResponse){
         var newCurrentWeather = CurrentWeather()
         newCurrentWeather.dt = data.dt
         newCurrentWeather.timezone = data.timezone

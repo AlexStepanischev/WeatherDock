@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CurrentWeatherData: Codable {
+struct CurrentWeatherResponse: Codable {
     var coord: Coord
     var weather: [Weather]
     var base: String
@@ -22,8 +22,8 @@ struct CurrentWeatherData: Codable {
     var name: String
     var cod: Int
     
-    static func getEmpty() -> CurrentWeatherData {
-        return CurrentWeatherData (
+    static func getEmpty() -> CurrentWeatherResponse {
+        return CurrentWeatherResponse (
             coord: Coord(lon: 0.0, lat: 0.0),
             weather: [Weather(id: 0, main: "No data", description: "No data", icon: "?")],
             base: "?",
