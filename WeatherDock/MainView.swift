@@ -62,9 +62,14 @@ struct MainView: View {
             CurrentWeatherView(updater: $data.updater)
             
             Divider()
+            
+            //Hourly forecast view
+            HourlyForecastView(updater: $data.updater)
+            
+            Divider()
 
-            //Forecast view including hourly and daily forecsats
-            ForecastView(updater: $data.updater)
+            //Daily forecast view
+            DailyForecastView(updater: $data.updater)
         }
         .frame(width: 430)
         .onTapGesture {
