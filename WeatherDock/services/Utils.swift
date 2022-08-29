@@ -48,37 +48,44 @@ struct Utils {
     static func getTimefromUnix(dt: Double, timezone: Int) -> String {
         let date = Date(timeIntervalSince1970: dt)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = .init(secondsFromGMT: timezone)
+        var dateFormat24 = Date.FormatStyle()
+            .hour(.twoDigits(amPM: .omitted))
+            .minute(.twoDigits)
+        
+        dateFormat24.timeZone = TimeZone(secondsFromGMT: timezone)!
+        
+        var dateFormat12 = Date.FormatStyle()
+            .hour(.conversationalDefaultDigits(amPM: .abbreviated))
+        
+        dateFormat12.timeZone = TimeZone(secondsFromGMT: timezone)!
         
         if timeFormat == TimeFormat.twentyfour.rawValue {
-            dateFormatter.timeStyle = DateFormatter.Style.short
+            return dateFormat24.format(date)
         } else {
-            if #available(macOS 12.1, *) {
-                dateFormatter.dateFormat = "h a"
-            } else {
-                dateFormatter.dateFormat = "H a"
-            }
+            return dateFormat12.format(date)
         }
-
-        let localTime = dateFormatter.string(from: date)
-        return localTime
     }
     
     static func getLongTimefromUnix(dt: Double, timezone: Int) -> String {
         let date = Date(timeIntervalSince1970: dt)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = .init(secondsFromGMT: timezone)
+        var dateFormat24 = Date.FormatStyle()
+            .hour(.twoDigits(amPM: .omitted))
+            .minute(.twoDigits)
+        
+        dateFormat24.timeZone = TimeZone(secondsFromGMT: timezone)!
+        
+        var dateFormat12 = Date.FormatStyle()
+            .hour(.conversationalDefaultDigits(amPM: .abbreviated))
+            .minute(.twoDigits)
+        
+        dateFormat12.timeZone = TimeZone(secondsFromGMT: timezone)!
         
         if timeFormat == TimeFormat.twentyfour.rawValue {
-            dateFormatter.timeStyle = DateFormatter.Style.short
+            return dateFormat24.format(date)
         } else {
-            dateFormatter.dateFormat = "h:mm a"
+            return dateFormat12.format(date)
         }
-
-        let localTime = dateFormatter.string(from: date)
-        return localTime
     }
     
     static func getDateTimefromUnix(dt: Double, timezone: Int) -> String {
