@@ -1,6 +1,6 @@
 //
-//  CurrentWeatherData.swift
-//  OpenWeather
+//  CurrentWeatherResponse.swift
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 05/05/2022.
 //

@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 09/05/2022.
 //

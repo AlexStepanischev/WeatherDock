@@ -1,6 +1,6 @@
 //
 //  LocationManager.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 06/05/2022.
 //

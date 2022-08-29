@@ -1,6 +1,6 @@
 //
 //  Extentions.swift
-//  OpenWeather
+//  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 05/05/2022.
 //

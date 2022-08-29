@@ -1,5 +1,5 @@
 //
-//  AirPollutionData.swift
+//  AirPollutionResponse.swift
 //  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 22/06/2022.

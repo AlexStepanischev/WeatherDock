@@ -2,7 +2,7 @@
 //  AirPollution.swift
 //  WeatherDock
 //
-//  Created by Maryia Geraseva on 8/29/22.
+//  Created by Aleksandr Stepanischev on 8/29/22.
 //
 
 import SwiftUI

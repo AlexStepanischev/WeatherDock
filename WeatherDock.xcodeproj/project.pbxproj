@@ -88,6 +88,7 @@
 			children = (
 				24ABA43A28BA67AD00AF848D /* CurrentWeather.swift */,
 				24ABA44128BCBE0200AF848D /* AirPollution.swift */,
+				E261C3ED2832850F0048B5DE /* DefaultSettings.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -118,6 +119,25 @@
 			path = response;
 			sourceTree = "<group>";
 		};
+		24ABA44328BCCE3000AF848D /* main */ = {
+			isa = PBXGroup;
+			children = (
+				24ABA43728BA26D300AF848D /* HeaderView.swift */,
+				E261C3F8283285100048B5DE /* CurrentWeatherView.swift */,
+				24ABA43C28BB7E9600AF848D /* AirPollutionView.swift */,
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		24ABA44428BCCF4E00AF848D /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				E261C3EF283285100048B5DE /* Extentions.swift */,
+				E261C3F1283285100048B5DE /* Utils.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		E261C3CA283283F40048B5DE = {
 			isa = PBXGroup;
 			children = (
@@ -144,7 +164,10 @@
 				24ABA43928BA676000AF848D /* model */,
 				E261C3E92832850F0048B5DE /* data */,
 				E261C3EE283285100048B5DE /* services */,
+				24ABA44428BCCF4E00AF848D /* utils */,
 				E261C3F3283285100048B5DE /* views */,
+				E261C3FA283285100048B5DE /* MainView.swift */,
+				E261C3EA2832850F0048B5DE /* WeatherData.swift */,
 				E261C3D6283283F40048B5DE /* WeatherDockApp.swift */,
 				E261C40B2832863A0048B5DE /* Info.plist */,
 				E261C409283285360048B5DE /* keys.plist */,
@@ -166,9 +189,7 @@
 		E261C3E92832850F0048B5DE /* data */ = {
 			isa = PBXGroup;
 			children = (
-				E261C3EA2832850F0048B5DE /* WeatherData.swift */,
 				E261C3EB2832850F0048B5DE /* ForecastData.swift */,
-				E261C3ED2832850F0048B5DE /* DefaultSettings.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -176,8 +197,6 @@
 		E261C3EE283285100048B5DE /* services */ = {
 			isa = PBXGroup;
 			children = (
-				E261C3EF283285100048B5DE /* Extentions.swift */,
-				E261C3F1283285100048B5DE /* Utils.swift */,
 				E261C3F2283285100048B5DE /* LocationManager.swift */,
 			);
 			path = services;
@@ -186,12 +205,9 @@
 		E261C3F3283285100048B5DE /* views */ = {
 			isa = PBXGroup;
 			children = (
+				24ABA44328BCCE3000AF848D /* main */,
 				E261C3F4283285100048B5DE /* settings */,
-				E261C3F8283285100048B5DE /* CurrentWeatherView.swift */,
-				24ABA43C28BB7E9600AF848D /* AirPollutionView.swift */,
 				E261C3F9283285100048B5DE /* ForecastView.swift */,
-				E261C3FA283285100048B5DE /* MainView.swift */,
-				24ABA43728BA26D300AF848D /* HeaderView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
