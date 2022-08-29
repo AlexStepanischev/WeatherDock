@@ -79,6 +79,7 @@ struct OpenWeather {
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 updateAirPollutionWith(data: updatedAirPollutionData)
                 weatherData.forecastData = updatedForecastData
+                updateHourlyForecastWith(data: updatedForecastData)
                 weatherData.city = updatedCurrentWeatherData.name
                 AppDelegate.updateMenuButton()
             }
@@ -100,18 +101,20 @@ struct OpenWeather {
                     updateCurrentWeatherWith(data: CurrentWeatherResponse.getEmpty())
                     updateAirPollutionWith(data: AirPollutionResponse.getEmpty())
                     weatherData.forecastData = ForecastData.getEmpty()
+                    updateHourlyForecastWith(data: ForecastData.getEmpty())
                     weatherData.refreshView()
                 }
             } else {
                 let updatedAirPollutionData = await getAirPollutionData(location: location)
-                let updatedforecastData = await getForecastData(location: location)
+                let updatedForecastData = await getForecastData(location: location)
                 
                 print("All weather updated by city at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
                 
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                     updateAirPollutionWith(data: updatedAirPollutionData)
-                    weatherData.forecastData = updatedforecastData
+                    weatherData.forecastData = updatedForecastData
+                    updateHourlyForecastWith(data: updatedForecastData)
                     weatherData.city = updatedCurrentWeatherData.name
                     AppDelegate.updateMenuButton()
                 }
@@ -267,4 +270,25 @@ struct OpenWeather {
                 
         WeatherData.shared.airPollution = newAirPollution
     }
+    
+    private static func updateHourlyForecastWith(data: ForecastData){
+        
+        var newHourDataArray: [HourData] = []
+        
+        for updatedHour in data.hourly {
+            var newHourData = HourData()
+            newHourData.dt = updatedHour.dt
+            newHourData.timezone_offset = data.timezone_offset
+            newHourData.precipitation = Int(round(updatedHour.pop*100))
+            newHourData.temperature = Int(updatedHour.temp.rounded())
+            newHourData.temp_unit = Utils.getTempMeasurement()
+            newHourData.weather_condition = updatedHour.weather[0].id
+            newHourData.icon = Utils.getIconByTimeConditionId(id: updatedHour.weather[0].id, dt: updatedHour.dt)
+            
+            newHourDataArray.append(newHourData)
+        }
+        
+        WeatherData.shared.hourlyForecast = HourlyForecast(hour_data: newHourDataArray)
+    }
+    
 }

@@ -12,7 +12,7 @@ struct CurrentWeather {
     var timezone = 0
     var icon = "cloud.sun"
     var temperature = 0
-    var temp_unit = "°F"
+    var temp_unit = Utils.getTempMeasurement()
     var description = "No data"
     var short_desc = "No data"
     var feels_like = 0

@@ -13,23 +13,26 @@ struct HourlyForecastView: View {
     @Binding var updater: Bool
     
     var body: some View {
+        
+        let hourlyForecast = weatherData.hourlyForecast
+        
         ScrollView(.horizontal){
             HStack(alignment: .top){
-                ForEach(weatherData.forecastData.getHourlyTrimmed()){ data in
+                ForEach(hourlyForecast.getHourlyTrimmed()){ data in
                     VStack{
-                        Text("\(Int(data.temp.rounded()))°\(Utils.getTempMeasurement())").font(.headline)
+                        Text("\(data.temperature)°\(data.temp_unit)").font(.headline)
                         HStack(spacing: 1) {
                             Image(systemName: "drop").font(.caption)
                                 .help("Probability of precipitation")
-                            Text("\(Int(round(data.pop*100)))%").font(.caption)
+                            Text("\(data.precipitation)%").font(.caption)
                                 .help("Probability of precipitation")
                         }
-                        Image(systemName: Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)).font(.title).frame(height: 15)
-                        Text(Utils.getTimefromUnix(dt: data.dt, timezone: weatherData.forecastData.timezone_offset)).font(.subheadline).padding(.top, 2)
+                        Image(systemName: data.icon).font(.title).frame(height: 15)
+                        Text(data.getTimeFormatted()).font(.subheadline).padding(.top, 2)
                     }.padding(.leading)
                 }
             }.padding(.bottom).padding(.trailing)
         }.padding(.top)
-         .transition(.move(edge: .bottom))
+         .transition(.move(edge: .bottom))        
     }
 }

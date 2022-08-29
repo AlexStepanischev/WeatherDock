@@ -11,6 +11,7 @@ import CoreLocation
 class WeatherData: ObservableObject {
     @Published var currentWeather = CurrentWeather()
     @Published var airPollution = AirPollution()
+    @Published var hourlyForecast = HourlyForecast(hour_data: [HourData()])
     
     @Published var forecastData = ForecastData.getEmpty()
     @Published var updater = true
