@@ -10,9 +10,9 @@ import CoreLocation
 
 class WeatherData: ObservableObject {
     @Published var currentWeather = CurrentWeather()
+    @Published var airPollution = AirPollution()
     
     @Published var forecastData = ForecastData.getEmpty()
-    @Published var airPollutionData = AirPollutionData.getEmpty()
     @Published var updater = true
     
     @AppStorage("getDataBy") var getDataBy = DefaultSettings.getDataBy

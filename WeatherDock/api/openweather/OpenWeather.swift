@@ -77,7 +77,7 @@ struct OpenWeather {
             DispatchQueue.main.async {
                 let weatherData = WeatherData.shared
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
-                weatherData.airPollutionData = updatedAirPollutionData
+                updateAirPollutionWith(data: updatedAirPollutionData)
                 weatherData.forecastData = updatedForecastData
                 weatherData.city = updatedCurrentWeatherData.name
                 AppDelegate.updateMenuButton()
@@ -98,7 +98,7 @@ struct OpenWeather {
             if (location.coordinate.latitude, location.coordinate.longitude) == (0.0, 0.0) {
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: CurrentWeatherResponse.getEmpty())
-                    weatherData.airPollutionData = AirPollutionData.getEmpty()
+                    updateAirPollutionWith(data: AirPollutionResponse.getEmpty())
                     weatherData.forecastData = ForecastData.getEmpty()
                     weatherData.refreshView()
                 }
@@ -110,7 +110,7 @@ struct OpenWeather {
                 
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: updatedCurrentWeatherData)
-                    weatherData.airPollutionData = updatedAirPollutionData
+                    updateAirPollutionWith(data: updatedAirPollutionData)
                     weatherData.forecastData = updatedforecastData
                     weatherData.city = updatedCurrentWeatherData.name
                     AppDelegate.updateMenuButton()
@@ -142,7 +142,7 @@ struct OpenWeather {
 
             DispatchQueue.main.async {
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
-                weatherData.airPollutionData = updatedAirPollutionData
+                updateAirPollutionWith(data: updatedAirPollutionData)
                 weatherData.location = new_location
                 AppDelegate.updateMenuButton()
             }
@@ -165,19 +165,19 @@ struct OpenWeather {
     }
     
     //Performs Api call and data decoding for air pollution data, returns zero data in case of error
-    private static func getAirPollutionData(location: CLLocation) async -> AirPollutionData {
+    private static func getAirPollutionData(location: CLLocation) async -> AirPollutionResponse {
         let url = getAirPollutionUrl(location: location)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(AirPollutionData.self, from: data){
+            if let decodedResponse = try? JSONDecoder().decode(AirPollutionResponse.self, from: data){
                 return decodedResponse
             }
         } catch {
             print("Issues with getting data form API")
             print(error)
         }
-        return AirPollutionData.getEmpty()
+        return AirPollutionResponse.getEmpty()
     }
     
     //Performs Api call and data decoding for one call forecast data, returns zero data in case of error
@@ -216,5 +216,55 @@ struct OpenWeather {
         
         WeatherData.shared.currentWeather = newCurrentWeather
         WeatherData.shared.currentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
+    }
+    
+    //Updating air pollution data with received data
+    private static func updateAirPollutionWith(data: AirPollutionResponse){
+        var newAirPollution = AirPollution()
+        
+        if !data.list.isEmpty {
+            newAirPollution.aqi = data.list[0].main.aqi
+            newAirPollution.aqi_icon = Utils.aqi[data.list[0].main.aqi]?.1 ?? "aqi.low"
+            newAirPollution.aqi_text = Utils.aqi[data.list[0].main.aqi]?.0 ?? "Unknown"
+            
+            let airComponents = data.list[0].components
+            var pollutants = Pollutants()
+            
+            if let co = airComponents.co {
+                pollutants.co = String(format: "%.1f", co)
+            }
+            
+            if let no = airComponents.no {
+                pollutants.no = String(format: "%.1f", no)
+            }
+            
+            if let no2 = airComponents.no2 {
+                pollutants.no2 = String(format: "%.1f", no2)
+            }
+            
+            if let o3 = airComponents.o3 {
+                pollutants.o3 = String(format: "%.1f", o3)
+            }
+            
+            if let so2 = airComponents.so2 {
+                pollutants.so2 = String(format: "%.1f", so2)
+            }
+            
+            if let pm2_5 = airComponents.pm2_5 {
+                pollutants.pm2_5 = String(format: "%.1f", pm2_5)
+            }
+            
+            if let pm10 = airComponents.pm10 {
+                pollutants.pm10 = String(format: "%.1f", pm10)
+            }
+            
+            if let nh3 = airComponents.nh3 {
+                pollutants.nh3 = String(format: "%.1f", nh3)
+            }
+            
+            newAirPollution.pollutants = pollutants
+        }
+                
+        WeatherData.shared.airPollution = newAirPollution
     }
 }

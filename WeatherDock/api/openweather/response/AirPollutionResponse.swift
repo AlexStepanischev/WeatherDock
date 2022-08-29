@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AirPollutionData: Codable {
+struct AirPollutionResponse: Codable {
     var coord: Coord
     var list: [Pollution]
     
-    static func getEmpty() -> AirPollutionData {
-        return AirPollutionData(
+    static func getEmpty() -> AirPollutionResponse {
+        return AirPollutionResponse(
             coord: Coord(lon: 0.0, lat: 0.0),
             list: [
                 Pollution(
