@@ -173,7 +173,6 @@
 			children = (
 				24ABA43E28BBA48D00AF848D /* api */,
 				24ABA43928BA676000AF848D /* model */,
-				E261C3E92832850F0048B5DE /* data */,
 				E261C3EE283285100048B5DE /* services */,
 				24ABA44428BCCF4E00AF848D /* utils */,
 				E261C3F3283285100048B5DE /* views */,
@@ -195,13 +194,6 @@
 				E261C3DD283283F50048B5DE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		E261C3E92832850F0048B5DE /* data */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = data;
 			sourceTree = "<group>";
 		};
 		E261C3EE283285100048B5DE /* services */ = {
