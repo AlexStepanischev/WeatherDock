@@ -32,11 +32,11 @@ struct DailyForecastView: View {
                             .help("Probability of precipitation")
                     }
                 }
-                .popover(isPresented: self.makeIsPresented(id: dayDate.1), arrowEdge: .bottom) {
-                    DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: data.timezone_offset)
+                .popover(isPresented: self.makeIsPresented(id: data.id.uuidString), arrowEdge: .bottom) {
+                    DailyDetailsPopoverView(data: data, timezone: data.timezone_offset)
                 }
                 .onHover { hover in
-                    self.hoverID = dayDate.1
+                    self.hoverID = data.id.uuidString
                     self.hoverState = hover
                 }
             }
@@ -56,7 +56,6 @@ struct DailyForecastView: View {
 }
 
 struct DailyDetailsPopoverView: View {
-    var id: String
     var data: DayData
     var timezone: Int
     var body: some View {
