@@ -20,7 +20,7 @@ struct CurrentWeather {
     var sunset = 0.0
     var humidity = 0
     var wind_speed = 0
-    var wind_unit = "mph"
+    var wind_unit = Utils.getSpeedMeasurement()
     var pressure = 0
     var city = "Unknown City"
     

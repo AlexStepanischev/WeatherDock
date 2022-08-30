@@ -14,23 +14,26 @@ struct DailyForecastView: View {
     @State var hoverState = false
     @State var hoverID = ""
     var body: some View {
+        
+        let dailyForecast = weatherData.dailyForecast
+        
         HStack(spacing: 25){
-            ForEach(weatherData.forecastData.getDaily()){ data in
-                let dayDate = Utils.getDayDate(dt: data.dt, timezone: weatherData.forecastData.timezone_offset)
+            ForEach(dailyForecast.getDaily()){ data in
+                let dayDate = data.dayDate
                 VStack{
                     Text(dayDate.0.uppercased()).font(.headline)
                     Text(dayDate.1).font(.caption).padding(.bottom, 5)
-                    Image(systemName: Utils.getIconByConditionId(id: data.weather[0].id)).font(.title).frame(height: 15)
-                    Text("\(Int(data.temp.max.rounded()))°\(Utils.getTempMeasurement())").font(.subheadline).bold().padding(.top, 2)
+                    Image(systemName: data.icon).font(.title).frame(height: 15)
+                    Text("\(data.temperature)°\(data.temp_unit)").font(.subheadline).bold().padding(.top, 2)
                     HStack(spacing: 1) {
                         Image(systemName: "drop").font(.caption)
                             .help("Probability of precipitation")
-                        Text("\(Int(round(data.pop*100)))%").font(.caption)
+                        Text("\(data.precipitation)%").font(.caption)
                             .help("Probability of precipitation")
                     }
                 }
                 .popover(isPresented: self.makeIsPresented(id: dayDate.1), arrowEdge: .bottom) {
-                    DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: weatherData.forecastData.timezone_offset)
+                    DailyDetailsPopoverView(id: dayDate.1, data: data, timezone: data.timezone_offset)
                 }
                 .onHover { hover in
                     self.hoverID = dayDate.1
@@ -54,36 +57,36 @@ struct DailyForecastView: View {
 
 struct DailyDetailsPopoverView: View {
     var id: String
-    var data: Daily
+    var data: DayData
     var timezone: Int
     var body: some View {
         VStack{
-            Text(Utils.getDate(dt: data.dt, timezone: timezone)).font(.title2).padding(.bottom, 1)
+            Text(data.date).font(.title2).padding(.bottom, 1)
             HStack{
                 HStack(alignment: .top){
-                    Image(systemName: Utils.getIconByConditionId(id: data.weather[0].id)).font(Font.system(size: 40, weight: .bold))
+                    Image(systemName: data.icon).font(Font.system(size: 40, weight: .bold))
                     VStack(alignment: .leading) {
-                        Text("\(Int(data.temp.max.rounded()))°\(Utils.getTempMeasurement())")
+                        Text("\(data.temperature)°\(data.temp_unit)")
                             .font(Font.system(size: 30, weight: .bold))
                             .frame(width: 90)
                         HStack{
                             Image(systemName: "moon.stars")
-                            Text("\(Int(data.temp.night.rounded()))°\(Utils.getTempMeasurement())")
+                            Text("\(data.temperature_night)°\(data.temp_unit)")
                         }
                     }.multilineTextAlignment(.leading)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
-                    Text(data.weather[0].description.firstCapitalized).font(.title2)
-                    Text("FEELS LIKE \(Int(data.feels_like.day.rounded()))°\(Utils.getTempMeasurement())").font(.footnote)
+                    Text(data.description).font(.title2)
+                    Text("FEELS LIKE \(data.feels_like)°\(data.temp_unit)").font(.footnote)
                 }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
-                        Text(Utils.getLongTimefromUnix(dt: data.sunrise, timezone: timezone))
+                        Text(data.getSunriseFormatted())
                     }.padding(.bottom, 1)
                     HStack{
                         Image(systemName: "sunset").font(Font.system(size: 15))
-                        Text(Utils.getLongTimefromUnix(dt: data.sunset, timezone: timezone))
+                        Text(data.getSunsetFormatted())
                     }
                 }
             }
@@ -95,15 +98,15 @@ struct DailyDetailsPopoverView: View {
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
-                    Text("\(Int(data.wind_speed.rounded())) \(Utils.getSpeedMeasurement())").font(.headline)
+                    Text("\(data.wind_speed) \(data.wind_unit)").font(.headline)
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
-                    Text(Utils.getPressureValueUnit(hPa: data.pressure)).font(.headline)
+                    Text(data.getConvertedPressure()).font(.headline)
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "drop").font(Font.system(size: 15, weight: .bold))
-                    Text("\(Int(round(data.pop*100)))%").font(.headline)
+                    Text("\(data.precipitation)%").font(.headline)
                 }
             }.padding(.top, 1)
         }

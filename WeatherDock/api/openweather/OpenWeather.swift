@@ -78,7 +78,7 @@ struct OpenWeather {
                 let weatherData = WeatherData.shared
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 updateAirPollutionWith(data: updatedAirPollutionData)
-                weatherData.forecastData = updatedForecastData
+                updateDailyForecastWith(data: updatedForecastData)
                 updateHourlyForecastWith(data: updatedForecastData)
                 weatherData.city = updatedCurrentWeatherData.name
                 AppDelegate.updateMenuButton()
@@ -100,7 +100,7 @@ struct OpenWeather {
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: CurrentWeatherResponse.getEmpty())
                     updateAirPollutionWith(data: AirPollutionResponse.getEmpty())
-                    weatherData.forecastData = ForecastData.getEmpty()
+                    updateDailyForecastWith(data: ForecastData.getEmpty())
                     updateHourlyForecastWith(data: ForecastData.getEmpty())
                     weatherData.refreshView()
                 }
@@ -113,7 +113,7 @@ struct OpenWeather {
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                     updateAirPollutionWith(data: updatedAirPollutionData)
-                    weatherData.forecastData = updatedForecastData
+                    updateDailyForecastWith(data: updatedForecastData)
                     updateHourlyForecastWith(data: updatedForecastData)
                     weatherData.city = updatedCurrentWeatherData.name
                     AppDelegate.updateMenuButton()
@@ -271,6 +271,7 @@ struct OpenWeather {
         WeatherData.shared.airPollution = newAirPollution
     }
     
+    //Updating hourly forecast data with received data
     private static func updateHourlyForecastWith(data: ForecastData){
         
         var newHourDataArray: [HourData] = []
@@ -291,4 +292,36 @@ struct OpenWeather {
         WeatherData.shared.hourlyForecast = HourlyForecast(hour_data: newHourDataArray)
     }
     
+    //Updating daily forecast data with received data
+    private static func updateDailyForecastWith(data: ForecastData){
+        
+        var newDayDataArray: [DayData] = []
+        
+        for updatedDay in data.daily {
+            var newDayData = DayData()
+            newDayData.dt = updatedDay.dt
+            newDayData.timezone_offset = data.timezone_offset
+            newDayData.dayDate = Utils.getDayDate(dt: updatedDay.dt, timezone: data.timezone_offset)
+            newDayData.date = Utils.getDate(dt: updatedDay.dt, timezone: data.timezone_offset)
+            newDayData.icon = Utils.getIconByConditionId(id: updatedDay.weather[0].id)
+            newDayData.temperature = Int(updatedDay.temp.max.rounded())
+            newDayData.temperature_night = Int(updatedDay.temp.night.rounded())
+            newDayData.temp_unit = Utils.getTempMeasurement()
+            newDayData.description = updatedDay.weather[0].description.firstCapitalized
+            newDayData.short_desc = updatedDay.weather[0].main
+            newDayData.feels_like = Int(updatedDay.feels_like.day.rounded())
+            newDayData.sunrise = updatedDay.sunrise
+            newDayData.sunset = updatedDay.sunset
+            newDayData.humidity = updatedDay.humidity
+            newDayData.wind_speed = Int(updatedDay.wind_speed.rounded())
+            newDayData.wind_unit = Utils.getSpeedMeasurement()
+            newDayData.pressure = updatedDay.pressure
+            newDayData.precipitation = Int(round(updatedDay.pop*100))
+            newDayData.weather_condition = updatedDay.weather[0].id
+            
+            newDayDataArray.append(newDayData)
+        }
+        
+        WeatherData.shared.dailyForecast = DailyForecast(day_data: newDayDataArray)
+    }    
 }

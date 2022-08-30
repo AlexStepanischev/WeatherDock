@@ -138,12 +138,14 @@ struct Utils {
         let sunriseToday = currentWeather.sunrise
         let sunsetToday = currentWeather.sunset
         
-        if WeatherData.shared.forecastData.getDailyTrimmed().isEmpty {
+        let dailyForecast = WeatherData.shared.dailyForecast
+        
+        if dailyForecast.getDailyTrimmed().isEmpty {
             return icons[id]?.0 ?? "cloud.sun"
         }
         
-        let sunriseTomorrow = WeatherData.shared.forecastData.getDailyTrimmed()[0].sunrise
-        let sunsetTomorrow = WeatherData.shared.forecastData.getDailyTrimmed()[0].sunset
+        let sunriseTomorrow = dailyForecast.getDailyTrimmed()[0].sunrise
+        let sunsetTomorrow = dailyForecast.getDailyTrimmed()[0].sunset
         
         if (dt > sunriseToday && dt < sunsetToday) || (dt > sunriseTomorrow && dt < sunsetTomorrow) {
             return icons[id]?.0 ?? "cloud.sun"

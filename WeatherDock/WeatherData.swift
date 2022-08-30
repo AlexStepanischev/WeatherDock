@@ -12,8 +12,8 @@ class WeatherData: ObservableObject {
     @Published var currentWeather = CurrentWeather()
     @Published var airPollution = AirPollution()
     @Published var hourlyForecast = HourlyForecast(hour_data: [HourData()])
-    
-    @Published var forecastData = ForecastData.getEmpty()
+    @Published var dailyForecast = DailyForecast(day_data: [DayData()])
+
     @Published var updater = true
     
     @AppStorage("getDataBy") var getDataBy = DefaultSettings.getDataBy
@@ -41,9 +41,9 @@ class WeatherData: ObservableObject {
     
     //Updates data according to update intervals
     func updateUIData(){
-        if forecastData.getHourlyTrimmed().count < 24 || forecastData.getDailyTrimmed().count < 7 {
+        if hourlyForecast.getHourlyTrimmed().count < 24 || dailyForecast.getDailyTrimmed().count < 7 {
             getAllData()
-        } else if forecastData.hourly[0].dt < Date.now.timeIntervalSince1970 - intervalForecastWeatherUpdate {
+        } else if hourlyForecast.hour_data[0].dt < Date.now.timeIntervalSince1970 - intervalForecastWeatherUpdate {
             getAllData()
         } else if currentWeather.dt < Date.now.timeIntervalSince1970 - intervalCurrentWeatherUpdate {
             refreshCurrentWeatherData()

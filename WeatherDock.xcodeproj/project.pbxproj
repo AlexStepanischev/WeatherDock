@@ -13,6 +13,7 @@
 		24ABA44228BCBE0200AF848D /* AirPollution.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA44128BCBE0200AF848D /* AirPollution.swift */; };
 		24ABA44628BCD17800AF848D /* HourlyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA44528BCD17800AF848D /* HourlyForecastView.swift */; };
 		24ABA44828BCD5D100AF848D /* HourlyForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA44728BCD5D100AF848D /* HourlyForecast.swift */; };
+		24ABA44A28BD1B7C00AF848D /* DailyForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA44928BD1B7C00AF848D /* DailyForecast.swift */; };
 		E261C3D7283283F40048B5DE /* WeatherDockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3D6283283F40048B5DE /* WeatherDockApp.swift */; };
 		E261C3DB283283F50048B5DE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E261C3DA283283F50048B5DE /* Assets.xcassets */; };
 		E261C3DE283283F50048B5DE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E261C3DD283283F50048B5DE /* Preview Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		24ABA44128BCBE0200AF848D /* AirPollution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPollution.swift; sourceTree = "<group>"; };
 		24ABA44528BCD17800AF848D /* HourlyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastView.swift; sourceTree = "<group>"; };
 		24ABA44728BCD5D100AF848D /* HourlyForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecast.swift; sourceTree = "<group>"; };
+		24ABA44928BD1B7C00AF848D /* DailyForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecast.swift; sourceTree = "<group>"; };
 		E261C3D3283283F40048B5DE /* WeatherDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E261C3D6283283F40048B5DE /* WeatherDockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDockApp.swift; sourceTree = "<group>"; };
 		E261C3DA283283F50048B5DE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				24ABA43A28BA67AD00AF848D /* CurrentWeather.swift */,
 				24ABA44128BCBE0200AF848D /* AirPollution.swift */,
 				24ABA44728BCD5D100AF848D /* HourlyForecast.swift */,
+				24ABA44928BD1B7C00AF848D /* DailyForecast.swift */,
 				E261C3ED2832850F0048B5DE /* DefaultSettings.swift */,
 			);
 			path = model;
@@ -131,6 +134,7 @@
 				E261C3F8283285100048B5DE /* CurrentWeatherView.swift */,
 				24ABA43C28BB7E9600AF848D /* AirPollutionView.swift */,
 				24ABA44528BCD17800AF848D /* HourlyForecastView.swift */,
+				E261C3F9283285100048B5DE /* DailyForecastView.swift */,
 			);
 			path = main;
 			sourceTree = "<group>";
@@ -213,7 +217,6 @@
 			children = (
 				24ABA44328BCCE3000AF848D /* main */,
 				E261C3F4283285100048B5DE /* settings */,
-				E261C3F9283285100048B5DE /* DailyForecastView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				E261C3FD283285100048B5DE /* CurrentWeatherResponse.swift in Sources */,
 				E261C3FC283285100048B5DE /* ForecastData.swift in Sources */,
 				E261C3D7283283F40048B5DE /* WeatherDockApp.swift in Sources */,
+				24ABA44A28BD1B7C00AF848D /* DailyForecast.swift in Sources */,
 				E261C404283285100048B5DE /* AboutSettingsView.swift in Sources */,
 				E261C407283285100048B5DE /* DailyForecastView.swift in Sources */,
 				24ABA44228BCBE0200AF848D /* AirPollution.swift in Sources */,
