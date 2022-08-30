@@ -100,8 +100,8 @@ struct OpenWeather {
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: CurrentWeatherResponse.getEmpty())
                     updateAirPollutionWith(data: AirPollutionResponse.getEmpty())
-                    updateDailyForecastWith(data: ForecastData.getEmpty())
-                    updateHourlyForecastWith(data: ForecastData.getEmpty())
+                    updateDailyForecastWith(data: OneCallResponse.getEmpty())
+                    updateHourlyForecastWith(data: OneCallResponse.getEmpty())
                     weatherData.refreshView()
                 }
             } else {
@@ -184,19 +184,19 @@ struct OpenWeather {
     }
     
     //Performs Api call and data decoding for one call forecast data, returns zero data in case of error
-    private static func getForecastData(location: CLLocation) async -> ForecastData {
+    private static func getForecastData(location: CLLocation) async -> OneCallResponse {
         let url = getOneCallUrl(location: location)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             
-            if let decodedResponse = try? JSONDecoder().decode(ForecastData.self, from: data){
+            if let decodedResponse = try? JSONDecoder().decode(OneCallResponse.self, from: data){
                 return decodedResponse
             }
         } catch {
             print("Issues with getting data form API")
             print(error)
         }
-        return ForecastData.getEmpty()
+        return OneCallResponse.getEmpty()
     }
     
     //Updating current weather data with received data
@@ -272,7 +272,7 @@ struct OpenWeather {
     }
     
     //Updating hourly forecast data with received data
-    private static func updateHourlyForecastWith(data: ForecastData){
+    private static func updateHourlyForecastWith(data: OneCallResponse){
         
         var newHourDataArray: [HourData] = []
         
@@ -293,7 +293,7 @@ struct OpenWeather {
     }
     
     //Updating daily forecast data with received data
-    private static func updateDailyForecastWith(data: ForecastData){
+    private static func updateDailyForecastWith(data: OneCallResponse){
         
         var newDayDataArray: [DayData] = []
         

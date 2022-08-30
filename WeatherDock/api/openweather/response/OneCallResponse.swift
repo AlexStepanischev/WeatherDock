@@ -7,84 +7,16 @@
 
 import SwiftUI
 
-struct ForecastData: Codable {
+struct OneCallResponse: Codable {
     var lat: Double
     var lon: Double
     var timezone: String
     var timezone_offset: Int
     var hourly: [Hourly]
     var daily: [Daily]
-    
-    func getHourlyTrimmed() -> [Hourly] {
-        var data = hourly
         
-        if data[0].dt == 0.0 {
-            return Hourly.getEmptyArray()
-        }
-
-        while !data.isEmpty && data[0].dt < Date.now.timeIntervalSince1970 {
-            data.removeFirst()
-        }
-        
-        if data.isEmpty {
-            return Hourly.getEmptyArray()
-        }
-        
-        let result = Array(data.prefix(24))
-        return result
-    }
-    func getDailyTrimmedToSeven() -> [Daily] {
-        var data = daily
-        
-        if data[0].dt == 0.0 {
-            return Daily.getEmptyArray()
-        }
-        
-        while data.count < 7 {
-            data.removeFirst()
-        }
-        
-        return data
-    }
-    
-    func getDailyTrimmed() -> [Daily] {
-        var data = daily
-        
-        if data[0].dt == 0.0 {
-            return Daily.getEmptyArray()
-        }
-        
-        var trimmer = true
-        
-        while trimmer {
-            
-            let now = Date()
-            let nowWithOffset = now.timeIntervalSince1970 + Double(timezone_offset)
-            let nowDate = Date(timeIntervalSince1970: nowWithOffset)
-            
-            let dataDate = Date(timeIntervalSince1970: data[0].dt)
-
-            var calendar = Calendar(identifier: .gregorian)
-            calendar.timeZone = TimeZone(identifier: "UTC")!
-            let order = calendar.compare(nowDate, to: dataDate, toGranularity: .day)
-            
-            switch order {
-            case .orderedDescending:
-                data.removeFirst()
-            case .orderedAscending:
-                trimmer = false
-            case .orderedSame:
-                data.removeFirst()
-                trimmer = false
-            }
-            
-        }
-        
-        return data
-    }
-        
-    static func getEmpty() -> ForecastData {
-        return ForecastData(
+    static func getEmpty() -> OneCallResponse {
+        return OneCallResponse(
             lat: 0.0,
             lon: 0.0,
             timezone: "Unknown",
@@ -93,19 +25,9 @@ struct ForecastData: Codable {
             daily: Daily.getEmptyArray()
         )
     }
-    
-    func getDaily() -> [Daily]{
-        if getDailyTrimmed().count < 7 {
-            WeatherData.shared.getAllData()
-            return getDailyTrimmedToSeven()
-        }
-        return getDailyTrimmed()
-    }
 }
 
-struct Hourly: Codable, Identifiable {
-    var id: Double { self.dt }
-    
+struct Hourly: Codable {
     var dt: Double
     var temp: Double
     var feels_like: Double
@@ -161,11 +83,9 @@ struct Hourly: Codable, Identifiable {
             getEmpty()
         ]
     }
-    
 }
 
-struct Daily: Codable, Identifiable {
-    var id: Double { self.dt }
+struct Daily: Codable {
     
     var dt: Double
     var sunrise: Double
@@ -213,6 +133,7 @@ struct Daily: Codable, Identifiable {
             pop: 0.0,
             uvi: 0.0)
     }
+    
     static func getEmptyArray() -> [Daily] {
         return [
             getEmpty(),

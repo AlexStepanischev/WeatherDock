@@ -20,7 +20,7 @@
 		E261C3E6283284C00048B5DE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E261C3E5283284BF0048B5DE /* .gitignore */; };
 		E261C3E8283284E00048B5DE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E261C3E7283284E00048B5DE /* README.md */; };
 		E261C3FB283285100048B5DE /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3EA2832850F0048B5DE /* WeatherData.swift */; };
-		E261C3FC283285100048B5DE /* ForecastData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3EB2832850F0048B5DE /* ForecastData.swift */; };
+		E261C3FC283285100048B5DE /* OneCallResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3EB2832850F0048B5DE /* OneCallResponse.swift */; };
 		E261C3FD283285100048B5DE /* CurrentWeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3EC2832850F0048B5DE /* CurrentWeatherResponse.swift */; };
 		E261C3FE283285100048B5DE /* DefaultSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3ED2832850F0048B5DE /* DefaultSettings.swift */; };
 		E261C3FF283285100048B5DE /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261C3EF283285100048B5DE /* Extentions.swift */; };
@@ -56,7 +56,7 @@
 		E261C3E5283284BF0048B5DE /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E261C3E7283284E00048B5DE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E261C3EA2832850F0048B5DE /* WeatherData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
-		E261C3EB2832850F0048B5DE /* ForecastData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastData.swift; sourceTree = "<group>"; };
+		E261C3EB2832850F0048B5DE /* OneCallResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneCallResponse.swift; sourceTree = "<group>"; };
 		E261C3EC2832850F0048B5DE /* CurrentWeatherResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentWeatherResponse.swift; sourceTree = "<group>"; };
 		E261C3ED2832850F0048B5DE /* DefaultSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultSettings.swift; sourceTree = "<group>"; };
 		E261C3EF283285100048B5DE /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
@@ -123,6 +123,7 @@
 			children = (
 				E261C3EC2832850F0048B5DE /* CurrentWeatherResponse.swift */,
 				E2C1CF1828634A6400F07A34 /* AirPollutionResponse.swift */,
+				E261C3EB2832850F0048B5DE /* OneCallResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -199,7 +200,6 @@
 		E261C3E92832850F0048B5DE /* data */ = {
 			isa = PBXGroup;
 			children = (
-				E261C3EB2832850F0048B5DE /* ForecastData.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -365,7 +365,7 @@
 				24ABA43828BA26D300AF848D /* HeaderView.swift in Sources */,
 				E261C3FE283285100048B5DE /* DefaultSettings.swift in Sources */,
 				E261C3FD283285100048B5DE /* CurrentWeatherResponse.swift in Sources */,
-				E261C3FC283285100048B5DE /* ForecastData.swift in Sources */,
+				E261C3FC283285100048B5DE /* OneCallResponse.swift in Sources */,
 				E261C3D7283283F40048B5DE /* WeatherDockApp.swift in Sources */,
 				24ABA44A28BD1B7C00AF848D /* DailyForecast.swift in Sources */,
 				E261C404283285100048B5DE /* AboutSettingsView.swift in Sources */,
