@@ -25,7 +25,7 @@ struct HeaderView: View {
             .buttonStyle(PlainButtonStyle())
             .padding(.leading)
             Spacer()
-            Text(Utils.getDate(dt: currentWeather.dt, timezone: currentWeather.timezone)).font(.title2).padding(.bottom, 1)
+            Text(currentWeather.getDate()).font(.title2).padding(.bottom, 1)
             Spacer()
             Button {
                 NSApp.activate(ignoringOtherApps: true)

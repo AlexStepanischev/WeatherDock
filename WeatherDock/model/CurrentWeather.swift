@@ -24,15 +24,19 @@ struct CurrentWeather {
     var pressure = 0
     var city = "Unknown City"
     
-    func getConvertedPressure() -> String{
+    func getDate() -> String {
+        return Utils.getDate(dt: dt, timezone: timezone)
+    }
+    
+    func getConvertedPressure() -> String {
         return Utils.getPressureValueUnit(hPa: pressure)
     }
     
-    func getSunriseFormatted() -> String{
+    func getSunriseFormatted() -> String {
         return Utils.getLongTimefromUnix(dt: sunrise, timezone: timezone)
     }
     
-    func getSunsetFormatted() -> String{
+    func getSunsetFormatted() -> String {
         return Utils.getLongTimefromUnix(dt: sunset, timezone: timezone)
     }
 }
