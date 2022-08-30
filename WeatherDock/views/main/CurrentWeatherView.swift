@@ -20,13 +20,13 @@ struct CurrentWeatherView: View {
         VStack{
             HStack{
                 HStack(alignment: .top){
-                    Image(systemName: currentWeather.icon).font(Font.system(size: 40, weight: .bold))
-                    Text("\(currentWeather.temperature)°\(currentWeather.temp_unit)").font(Font.system(size: 30, weight: .bold))
+                    Image(systemName: currentWeather.getIcon()).font(Font.system(size: 40, weight: .bold))
+                    Text("\(currentWeather.temperature)°\(currentWeather.getTempUnit())").font(Font.system(size: 30, weight: .bold))
                         .frame(width: 90)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
                     Text(currentWeather.description).font(.title2)
-                    Text("FEELS LIKE \(currentWeather.feels_like)°\(currentWeather.temp_unit)").font(.footnote)
+                    Text("FEELS LIKE \(currentWeather.feels_like)°\(currentWeather.getTempUnit())").font(.footnote)
                 }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
@@ -54,7 +54,7 @@ struct CurrentWeatherView: View {
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
                         .help("Wind speed")
-                    Text("\(currentWeather.wind_speed) \(currentWeather.wind_unit)").font(.headline)
+                    Text("\(currentWeather.wind_speed) \(currentWeather.getWindUnit())").font(.headline)
                         .help("Wind speed")
                 }.padding(.trailing)
                 HStack{

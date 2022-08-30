@@ -20,14 +20,14 @@ struct HourlyForecastView: View {
             HStack(alignment: .top){
                 ForEach(hourlyForecast.getHourlyTrimmed()){ data in
                     VStack{
-                        Text("\(data.temperature)°\(data.temp_unit)").font(.headline)
+                        Text("\(data.temperature)°\(data.getTempUnit())").font(.headline)
                         HStack(spacing: 1) {
                             Image(systemName: "drop").font(.caption)
                                 .help("Probability of precipitation")
                             Text("\(data.precipitation)%").font(.caption)
                                 .help("Probability of precipitation")
                         }
-                        Image(systemName: data.icon).font(.title).frame(height: 15)
+                        Image(systemName: data.getIcon()).font(.title).frame(height: 15)
                         Text(data.getTimeFormatted()).font(.subheadline).padding(.top, 2)
                     }.padding(.leading)
                 }

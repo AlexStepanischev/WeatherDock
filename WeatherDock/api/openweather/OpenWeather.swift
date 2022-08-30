@@ -210,8 +210,8 @@ struct OpenWeather {
         var newCurrentWeather = CurrentWeather()
         newCurrentWeather.dt = data.dt
         newCurrentWeather.timezone = data.timezone
+        newCurrentWeather.weather_condition = data.weather[0].id
         newCurrentWeather.temperature = Int(data.main.temp.rounded())
-        newCurrentWeather.temp_unit = Utils.getTempMeasurement()
         newCurrentWeather.description = data.weather[0].description.firstCapitalized
         newCurrentWeather.short_desc = data.weather[0].main
         newCurrentWeather.feels_like = Int(data.main.feels_like.rounded())
@@ -219,12 +219,10 @@ struct OpenWeather {
         newCurrentWeather.sunset = data.sys.sunset
         newCurrentWeather.humidity = data.main.humidity
         newCurrentWeather.wind_speed = Int(data.wind.speed.rounded())
-        newCurrentWeather.wind_unit = Utils.getSpeedMeasurement()
         newCurrentWeather.pressure = data.main.pressure
         newCurrentWeather.city = data.name
         
         WeatherData.shared.currentWeather = newCurrentWeather
-        WeatherData.shared.currentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
     }
     
     //Updating air pollution data with received data
@@ -288,9 +286,7 @@ struct OpenWeather {
             newHourData.timezone_offset = data.timezone_offset
             newHourData.precipitation = Int(round(updatedHour.pop*100))
             newHourData.temperature = Int(updatedHour.temp.rounded())
-            newHourData.temp_unit = Utils.getTempMeasurement()
             newHourData.weather_condition = updatedHour.weather[0].id
-            newHourData.icon = Utils.getIconByTimeConditionId(id: updatedHour.weather[0].id, dt: updatedHour.dt)
             
             newHourDataArray.append(newHourData)
         }
@@ -307,12 +303,8 @@ struct OpenWeather {
             var newDayData = DayData()
             newDayData.dt = updatedDay.dt
             newDayData.timezone_offset = data.timezone_offset
-            newDayData.dayDate = Utils.getDayDate(dt: updatedDay.dt, timezone: data.timezone_offset)
-            newDayData.date = Utils.getDate(dt: updatedDay.dt, timezone: data.timezone_offset)
-            newDayData.icon = Utils.getIconByConditionId(id: updatedDay.weather[0].id)
             newDayData.temperature = Int(updatedDay.temp.max.rounded())
             newDayData.temperature_night = Int(updatedDay.temp.night.rounded())
-            newDayData.temp_unit = Utils.getTempMeasurement()
             newDayData.description = updatedDay.weather[0].description.firstCapitalized
             newDayData.short_desc = updatedDay.weather[0].main
             newDayData.feels_like = Int(updatedDay.feels_like.day.rounded())
@@ -320,7 +312,6 @@ struct OpenWeather {
             newDayData.sunset = updatedDay.sunset
             newDayData.humidity = updatedDay.humidity
             newDayData.wind_speed = Int(updatedDay.wind_speed.rounded())
-            newDayData.wind_unit = Utils.getSpeedMeasurement()
             newDayData.pressure = updatedDay.pressure
             newDayData.precipitation = Int(round(updatedDay.pop*100))
             newDayData.weather_condition = updatedDay.weather[0].id

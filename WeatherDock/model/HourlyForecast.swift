@@ -35,10 +35,16 @@ struct HourData: Identifiable {
     var dt = 0.0
     var timezone_offset = 0
     var temperature = 0
-    var temp_unit = Utils.getTempMeasurement()
     var precipitation = 0
     var weather_condition = 0
-    var icon = "cloud.sun"
+
+    func getIcon() -> String {
+        return Utils.getIconByTimeConditionId(id: weather_condition, dt: dt)
+    }
+    
+    func getTempUnit() -> String {
+        return Utils.getTempMeasurement()
+    }
     
     func getTimeFormatted() -> String {
         return Utils.getTimefromUnix(dt: dt, timezone: timezone_offset)

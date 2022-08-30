@@ -10,9 +10,8 @@ import SwiftUI
 struct CurrentWeather {
     var dt = 0.0
     var timezone = 0
-    var icon = "cloud.sun"
+    var weather_condition = 0
     var temperature = 0
-    var temp_unit = Utils.getTempMeasurement()
     var description = "No data"
     var short_desc = "No data"
     var feels_like = 0
@@ -20,9 +19,20 @@ struct CurrentWeather {
     var sunset = 0.0
     var humidity = 0
     var wind_speed = 0
-    var wind_unit = Utils.getSpeedMeasurement()
     var pressure = 0
     var city = "Unknown City"
+    
+    func getIcon() -> String {
+        return Utils.getIconByTimeConditionId(id: weather_condition, dt: dt)
+    }
+    
+    func getWindUnit() -> String {
+        Utils.getSpeedMeasurement()
+    }
+    
+    func getTempUnit() -> String {
+        return Utils.getTempMeasurement()
+    }
     
     func getDate() -> String {
         return Utils.getDate(dt: dt, timezone: timezone)

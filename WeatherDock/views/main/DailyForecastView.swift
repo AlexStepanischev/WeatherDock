@@ -19,12 +19,12 @@ struct DailyForecastView: View {
         
         HStack(spacing: 25){
             ForEach(dailyForecast.getDaily()){ data in
-                let dayDate = data.dayDate
+                let dayDate = data.getDayDate()
                 VStack{
                     Text(dayDate.0.uppercased()).font(.headline)
                     Text(dayDate.1).font(.caption).padding(.bottom, 5)
-                    Image(systemName: data.icon).font(.title).frame(height: 15)
-                    Text("\(data.temperature)°\(data.temp_unit)").font(.subheadline).bold().padding(.top, 2)
+                    Image(systemName: data.getIcon()).font(.title).frame(height: 15)
+                    Text("\(data.temperature)°\(data.getTempUnit())").font(.subheadline).bold().padding(.top, 2)
                     HStack(spacing: 1) {
                         Image(systemName: "drop").font(.caption)
                             .help("Probability of precipitation")
@@ -60,23 +60,23 @@ struct DailyDetailsPopoverView: View {
     var timezone: Int
     var body: some View {
         VStack{
-            Text(data.date).font(.title2).padding(.bottom, 1)
+            Text(data.getDate()).font(.title2).padding(.bottom, 1)
             HStack{
                 HStack(alignment: .top){
-                    Image(systemName: data.icon).font(Font.system(size: 40, weight: .bold))
+                    Image(systemName: data.getIcon()).font(Font.system(size: 40, weight: .bold))
                     VStack(alignment: .leading) {
-                        Text("\(data.temperature)°\(data.temp_unit)")
+                        Text("\(data.temperature)°\(data.getTempUnit())")
                             .font(Font.system(size: 30, weight: .bold))
                             .frame(width: 90)
                         HStack{
                             Image(systemName: "moon.stars")
-                            Text("\(data.temperature_night)°\(data.temp_unit)")
+                            Text("\(data.temperature_night)°\(data.getTempUnit())")
                         }
                     }.multilineTextAlignment(.leading)
                 }.padding(.trailing)
                 VStack(alignment: .leading){
                     Text(data.description).font(.title2)
-                    Text("FEELS LIKE \(data.feels_like)°\(data.temp_unit)").font(.footnote)
+                    Text("FEELS LIKE \(data.feels_like)°\(data.getTempUnit())").font(.footnote)
                 }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
@@ -97,7 +97,7 @@ struct DailyDetailsPopoverView: View {
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
-                    Text("\(data.wind_speed) \(data.wind_unit)").font(.headline)
+                    Text("\(data.wind_speed) \(data.getWindUnit())").font(.headline)
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
