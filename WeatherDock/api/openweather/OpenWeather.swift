@@ -141,8 +141,14 @@ struct OpenWeather {
 
             print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
-            let updatedAirPollutionData = await getAirPollutionData(location: new_location)
-
+            var newAirPollutionData = AirPollutionResponse.getEmpty()
+            
+            if updatedCurrentWeatherData.name != "Unknown City"{
+                newAirPollutionData = await getAirPollutionData(location: new_location)
+            }
+            
+            let updatedAirPollutionData = newAirPollutionData
+            
             DispatchQueue.main.async {
                 updateCurrentWeatherWith(data: updatedCurrentWeatherData)
                 updateAirPollutionWith(data: updatedAirPollutionData)
