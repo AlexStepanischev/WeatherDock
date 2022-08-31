@@ -102,6 +102,7 @@ struct OpenWeather {
                     updateAirPollutionWith(data: AirPollutionResponse.getEmpty())
                     updateDailyForecastWith(data: OneCallResponse.getEmpty())
                     updateHourlyForecastWith(data: OneCallResponse.getEmpty())
+                    weatherData.city = updatedCurrentWeatherData.name
                     weatherData.refreshView()
                 }
             } else {
@@ -131,6 +132,7 @@ struct OpenWeather {
         var url_var = getCurrentWeatherByLocationURL(location: location)
         if weatherData.getDataBy == GetDataBy.city.rawValue {
             url_var = getCurrentWeatherByCityURL(city: city)
+            print("Refreshing current data by city")
         }
         
         let url = url_var
