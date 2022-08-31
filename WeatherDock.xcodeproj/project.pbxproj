@@ -496,6 +496,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WeatherDock/WeatherDock.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
@@ -507,7 +508,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherDock/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Aleksandr Stepanischev";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Application requires user location to get weather data";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -529,6 +531,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WeatherDock/WeatherDock.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 6;
@@ -540,7 +543,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherDock/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2022 Aleksandr Stepanischev";
 				INFOPLIST_KEY_NSLocationUsageDescription = "Application requires user location to get weather data";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
