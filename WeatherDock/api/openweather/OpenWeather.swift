@@ -124,15 +124,20 @@ struct OpenWeather {
     }
     
     //Refreshing current weather data based on GetDataBy setting
-    static func refreshCurrentWeatherData() {
+    static func refreshCurrentWeatherData(by: GetDataBy) {
         let weatherData = WeatherData.shared
         let city = weatherData.city
         let location = weatherData.location
                 
-        var url_var = getCurrentWeatherByLocationURL(location: location)
-        if weatherData.getDataBy == GetDataBy.city.rawValue {
-            url_var = getCurrentWeatherByCityURL(city: city)
-            print("Refreshing current data by city")
+        var url_var: URL
+        
+        switch by {
+            case .location:
+                url_var = getCurrentWeatherByLocationURL(location: location)
+                print("Refreshing current weather by location")
+            case .city:
+                url_var = getCurrentWeatherByCityURL(city: city)
+                print("Refreshing current weather by city")
         }
         
         let url = url_var

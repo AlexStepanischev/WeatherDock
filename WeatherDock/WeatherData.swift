@@ -17,7 +17,7 @@ class WeatherData: ObservableObject {
     @Published var updater = true
     
     @AppStorage("getDataBy") var getDataBy = DefaultSettings.getDataBy
-    @AppStorage("city") var city = ""
+    @AppStorage("city") var city = "Unknown City"
     @Published var location = CLLocation(latitude: 0.0, longitude: 0.0)
     
     static let shared = WeatherData()
@@ -60,31 +60,45 @@ class WeatherData: ObservableObject {
         AppDelegate.updateMenuButton()
     }
     
+    func initData(){
+        if city == "Unknown City" {
+            getDataBy = GetDataBy.location.rawValue
+        } else {
+            if !LocationManager.shared.hasLocationPermission(){
+                getDataBy = GetDataBy.city.rawValue
+            }
+        }
+        getAllData()
+    }
+    
     //Getting all data based on location or city name
     func getAllData(){
         if getDataBy == GetDataBy.location.rawValue {
             LocationManager.shared.getDataByLocation()
-            print("Get all data by location")
         } else {
             loadAllDataByCity()
-            print("Get all data by city")
         }
     }
     
     //Calling API for loading all data by location
     func loadAllDataByLocation(location: CLLocation){
         self.location = location
-        
+        print("Get all data by location")
         OpenWeather.loadAllDataByLocation(location: location)
     }
     
     //Calling API for loading all data by city name
     private func loadAllDataByCity(){
+        print("Get all data by city")
         OpenWeather.loadAllDataByCity(city: city)
     }
     
     //Calling API for refreshing current weather data
     func refreshCurrentWeatherData() {
-        OpenWeather.refreshCurrentWeatherData()
+        if getDataBy == GetDataBy.location.rawValue && LocationManager.shared.hasLocationPermission() {
+            OpenWeather.refreshCurrentWeatherData(by: GetDataBy.location)
+        } else if city != "Unknown City" {
+            OpenWeather.refreshCurrentWeatherData(by: GetDataBy.city)
+        }
     }
 }

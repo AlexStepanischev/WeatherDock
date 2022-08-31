@@ -34,7 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         fileNotifications()
 
         //Loading application data
-        weatherData.getAllData()
+        weatherData.initData()
                 
         //Setting up main pop-over view
         setupMainView()

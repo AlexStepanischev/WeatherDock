@@ -35,4 +35,24 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Swift.Error) {
         print(error)
     }
+    
+    func hasLocationPermission() -> Bool {
+        var hasPermission = false
+        let manager = CLLocationManager()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            switch manager.authorizationStatus {
+            case .notDetermined, .restricted, .denied:
+                hasPermission = false
+            case .authorizedAlways, .authorizedWhenInUse:
+                hasPermission = true
+            @unknown default:
+                    break
+            }
+        } else {
+            hasPermission = false
+        }
+        
+        return hasPermission
+    }
 }

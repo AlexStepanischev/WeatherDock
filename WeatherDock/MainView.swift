@@ -12,8 +12,7 @@ struct MainView: View {
     @StateObject var data: WeatherData = WeatherData.shared
     @FocusState private var focusState: Bool
     @State private var disabled: Bool = true
-    @AppStorage("city") private var city = ""    
-    @AppStorage("getDataBy") private var getDataBy = DefaultSettings.getDataBy
+    @AppStorage("city") private var city = ""
     
     var body: some View {
         VStack {
@@ -24,7 +23,7 @@ struct MainView: View {
             //Location and city name line, should be in Main view due to some global focusing logic
             HStack(){
                 Button {
-                    getDataBy = GetDataBy.location.rawValue
+                    data.getDataBy = GetDataBy.location.rawValue
                     data.getAllData()
                 } label: {
                     Image(systemName: "location")
@@ -42,7 +41,7 @@ struct MainView: View {
                 ).textFieldStyle(PlainTextFieldStyle())
                 .onSubmit {
                     data.city = city
-                    getDataBy = GetDataBy.city.rawValue
+                    data.getDataBy = GetDataBy.city.rawValue
                     data.getAllData()
                 }
                 .focused($focusState, equals: false)
