@@ -129,6 +129,11 @@ struct Utils {
         
         return (day, date)
     }
+    
+    static func getLastWord(description: String) -> String {
+        return String(description.split(separator: " ").last!)
+    }
+    
     static func getIconByConditionId(id: Int) -> String {
         return icons[id]?.0 ?? "cloud.sun"
     }

@@ -15,12 +15,12 @@ struct CurrentWeatherView: View {
     
     var body: some View {
         
-        let currentWeather: CurrentWeather = weatherData.currentWeather
+        let currentWeather: CurrentWeatherData = weatherData.currentWeather
         
         VStack{
             HStack{
                 HStack(alignment: .top){
-                    Image(systemName: currentWeather.getIcon()).font(Font.system(size: 40, weight: .bold))
+                    Image(systemName: currentWeather.icon).font(Font.system(size: 40, weight: .bold))
                     Text("\(currentWeather.temperature)°\(currentWeather.getTempUnit())").font(Font.system(size: 30, weight: .bold))
                         .frame(width: 90)
                 }.padding(.trailing)

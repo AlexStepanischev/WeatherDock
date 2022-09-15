@@ -27,8 +27,8 @@ struct HourlyForecastView: View {
                             Text("\(data.precipitation)%").font(.caption)
                                 .help("Probability of precipitation")
                         }
-                        Image(systemName: data.getIcon()).font(.title).frame(height: 15)
-                        Text(data.getTimeFormatted()).font(.subheadline).padding(.top, 2)
+                        Image(systemName: data.icon).font(.title).frame(height: 15)
+                        Text(data.getTimeFormatted(timezone: hourlyForecast.timezone_offset)).font(.subheadline).padding(.top, 2)
                     }.padding(.leading)
                 }
             }.padding(.bottom).padding(.trailing)

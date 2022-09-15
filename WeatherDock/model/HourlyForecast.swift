@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HourlyForecast {
     var hour_data: [HourData]
+    var timezone_offset = 0
     
     func getHourlyTrimmed() -> [HourData] {
         var data = hour_data
@@ -33,21 +34,16 @@ struct HourData: Identifiable {
     var id = UUID()
     
     var dt = 0.0
-    var timezone_offset = 0
     var temperature = 0
     var precipitation = 0
-    var weather_condition = 0
-
-    func getIcon() -> String {
-        return Utils.getIconByTimeConditionId(id: weather_condition, dt: dt)
-    }
+    var icon = "cloud.sun"
     
     func getTempUnit() -> String {
         return Utils.getTempMeasurement()
     }
     
-    func getTimeFormatted() -> String {
-        return Utils.getTimefromUnix(dt: dt, timezone: timezone_offset)
+    func getTimeFormatted(timezone: Int) -> String {
+        return Utils.getTimefromUnix(dt: dt, timezone: timezone)
     }
     
     static func getEmptyArray() -> [HourData]{

@@ -13,6 +13,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
     
     static let shared = LocationManager()
+    let geoCoder = CLGeocoder()
 
     private override init() {
         super.init()
@@ -55,4 +56,32 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         
         return hasPermission
     }
+    
+    func getTimezoneFrom(location: CLLocation, completion: @escaping (_ placemark: [CLPlacemark]?, _ error: Error?) -> Void)  {
+        CLGeocoder().reverseGeocodeLocation(location) { placemark, error in
+            guard let placemark = placemark, error == nil else {
+                completion(nil, error)
+                return
+            }
+            completion(placemark, nil)
+        }
+    }
+    
+    func getLocationFrom(cityName: String,
+            completionHandler: @escaping(CLLocation, NSError?) -> Void ) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(cityName) { (placemarks, error) in
+            if error == nil {
+                if let placemark = placemarks?[0] {
+                    let location = placemark.location!
+                        
+                    completionHandler(location, nil)
+                    return
+                }
+            }
+                
+            completionHandler(CLLocation(latitude: 0.0, longitude: 0.0), error as NSError?)
+        }
+    }
+    
 }

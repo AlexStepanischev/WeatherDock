@@ -22,7 +22,7 @@ struct DailyForecast {
     func getDailyTrimmed() -> [DayData] {
         var data = day_data
         
-        if data[0].dt == 0.0 {
+        if data.isEmpty || data[0].dt == 0.0 {
             return DayData.getEmptyArray()
         }
         
@@ -51,13 +51,13 @@ struct DailyForecast {
             }
             
         }
-        return data
+        return Array<DayData>(data.prefix(upTo: 7))
     }
     
     func getDailyTrimmedToSeven() -> [DayData] {
         var data = day_data
         
-        if data[0].dt == 0.0 {
+        if data.isEmpty || data[0].dt == 0.0 {
             return DayData.getEmptyArray()
         }
         
@@ -73,7 +73,6 @@ struct DayData: Identifiable {
     var id = UUID()
     
     var dt = 0.0
-    var timezone_offset = 0
     var temperature = 0
     var temperature_night = 0
     var description = "No data"
@@ -86,6 +85,7 @@ struct DayData: Identifiable {
     var pressure = 0
     var precipitation = 0
     var weather_condition = 0
+    var icon = "cloud.sun"
     
     static func getEmptyArray() -> [DayData]{
         return [
@@ -99,8 +99,8 @@ struct DayData: Identifiable {
         ]
     }
     
-    func getDayDate() -> (String, String) {
-        return Utils.getDayDate(dt: dt, timezone: timezone_offset)
+    func getDayDate(timeone: Int) -> (String, String) {
+        return Utils.getDayDate(dt: dt, timezone: timezone)
     }
     
     func getDate() -> String {
@@ -108,7 +108,11 @@ struct DayData: Identifiable {
     }
     
     func getIcon() -> String {
-        return Utils.getIconByConditionId(id: weather_condition)
+        if weather_condition == 0 {
+            return icon
+        } else {
+            return Utils.getIconByConditionId(id: weather_condition)
+        }
     }
     
     func getWindUnit() -> String {
@@ -123,11 +127,11 @@ struct DayData: Identifiable {
         return Utils.getPressureValueUnit(hPa: pressure)
     }
     
-    func getSunriseFormatted() -> String{
-        return Utils.getLongTimefromUnix(dt: sunrise, timezone: timezone_offset)
+    func getSunriseFormatted(timezone: Int) -> String{
+        return Utils.getLongTimefromUnix(dt: sunrise, timezone: timezone)
     }
     
-    func getSunsetFormatted() -> String{
-        return Utils.getLongTimefromUnix(dt: sunset, timezone: timezone_offset)
+    func getSunsetFormatted(timezone: Int) -> String{
+        return Utils.getLongTimefromUnix(dt: sunset, timezone: timezone)
     }
 }

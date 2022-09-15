@@ -72,7 +72,7 @@ struct OpenWeather {
             let updatedAirPollutionData = await getAirPollutionData(location: location)
             let updatedForecastData = await getForecastData(location: location)
             
-            print("All weather updated by location at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            print("[OpenWeather] All weather updated by location at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
             DispatchQueue.main.async {
                 let weatherData = WeatherData.shared
@@ -109,7 +109,7 @@ struct OpenWeather {
                 let updatedAirPollutionData = await getAirPollutionData(location: location)
                 let updatedForecastData = await getForecastData(location: location)
                 
-                print("All weather updated by city at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+                print("[OpenWeather] All weather updated by city at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
                 
                 DispatchQueue.main.async {
                     updateCurrentWeatherWith(data: updatedCurrentWeatherData)
@@ -134,10 +134,10 @@ struct OpenWeather {
         switch by {
             case .location:
                 url_var = getCurrentWeatherByLocationURL(location: location)
-                print("Refreshing current weather by location")
+                print("[OpenWeather] Refreshing current weather by location")
             case .city:
                 url_var = getCurrentWeatherByCityURL(city: city)
-                print("Refreshing current weather by city")
+                print("[OpenWeather] Refreshing current weather by city")
         }
         
         let url = url_var
@@ -146,7 +146,7 @@ struct OpenWeather {
             let updatedCurrentWeatherData = await getCurrentWeatherData(url: url)
             let new_location = CLLocation(latitude: updatedCurrentWeatherData.coord.lat, longitude: updatedCurrentWeatherData.coord.lon)
 
-            print("Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
+            print("[OpenWeather] Current weather updated at: \(Utils.getDateTimefromUnix(dt: updatedCurrentWeatherData.dt, timezone: updatedCurrentWeatherData.timezone))")
             
             var newAirPollutionData = AirPollutionResponse.getEmpty()
             
@@ -174,14 +174,14 @@ struct OpenWeather {
                 return decodedResponse
             }
         } catch {
-            print("Issues with getting data form API")
+            print("[OpenWeather] Issues with getting data form API")
             print(error)
         }
         return CurrentWeatherResponse.getEmpty()
     }
     
     //Performs Api call and data decoding for air pollution data, returns zero data in case of error
-    private static func getAirPollutionData(location: CLLocation) async -> AirPollutionResponse {
+    static func getAirPollutionData(location: CLLocation) async -> AirPollutionResponse {
         let url = getAirPollutionUrl(location: location)
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -190,7 +190,7 @@ struct OpenWeather {
                 return decodedResponse
             }
         } catch {
-            print("Issues with getting data form API")
+            print("[OpenWeather] Issues with getting data form API")
             print(error)
         }
         return AirPollutionResponse.getEmpty()
@@ -206,7 +206,7 @@ struct OpenWeather {
                 return decodedResponse
             }
         } catch {
-            print("Issues with getting data form API")
+            print("[OpenWeather] Issues with getting data form API")
             print(error)
         }
         return OneCallResponse.getEmpty()
@@ -214,10 +214,10 @@ struct OpenWeather {
     
     //Updating current weather data with received data
     private static func updateCurrentWeatherWith(data: CurrentWeatherResponse){
-        var newCurrentWeather = CurrentWeather()
+        var newCurrentWeather = CurrentWeatherData()
         newCurrentWeather.dt = data.dt
         newCurrentWeather.timezone = data.timezone
-        newCurrentWeather.weather_condition = data.weather[0].id
+        newCurrentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
         newCurrentWeather.temperature = Int(data.main.temp.rounded())
         newCurrentWeather.description = data.weather[0].description.firstCapitalized
         newCurrentWeather.short_desc = data.weather[0].main
@@ -233,7 +233,7 @@ struct OpenWeather {
     }
     
     //Updating air pollution data with received data
-    private static func updateAirPollutionWith(data: AirPollutionResponse){
+    static func updateAirPollutionWith(data: AirPollutionResponse){
         var newAirPollution = AirPollution()
         
         if !data.list.isEmpty {
@@ -280,6 +280,7 @@ struct OpenWeather {
         }
                 
         WeatherData.shared.airPollution = newAirPollution
+        print("[OpenWeather] Air pollution data updated")
     }
     
     //Updating hourly forecast data with received data
@@ -290,15 +291,15 @@ struct OpenWeather {
         for updatedHour in data.hourly {
             var newHourData = HourData()
             newHourData.dt = updatedHour.dt
-            newHourData.timezone_offset = data.timezone_offset
             newHourData.precipitation = Int(round(updatedHour.pop*100))
             newHourData.temperature = Int(updatedHour.temp.rounded())
-            newHourData.weather_condition = updatedHour.weather[0].id
+            newHourData.icon = Utils.getIconByTimeConditionId(id: updatedHour.weather[0].id, dt: updatedHour.dt)
             
             newHourDataArray.append(newHourData)
         }
         
         WeatherData.shared.hourlyForecast = HourlyForecast(hour_data: newHourDataArray)
+        WeatherData.shared.hourlyForecast.timezone_offset = data.timezone_offset
     }
     
     //Updating daily forecast data with received data
@@ -309,7 +310,6 @@ struct OpenWeather {
         for updatedDay in data.daily {
             var newDayData = DayData()
             newDayData.dt = updatedDay.dt
-            newDayData.timezone_offset = data.timezone_offset
             newDayData.temperature = Int(updatedDay.temp.max.rounded())
             newDayData.temperature_night = Int(updatedDay.temp.night.rounded())
             newDayData.description = updatedDay.weather[0].description.firstCapitalized
@@ -327,5 +327,6 @@ struct OpenWeather {
         }
         
         WeatherData.shared.dailyForecast = DailyForecast(day_data: newDayDataArray)
+        WeatherData.shared.dailyForecast.timezone = data.timezone_offset
     }    
 }

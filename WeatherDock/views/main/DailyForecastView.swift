@@ -19,7 +19,7 @@ struct DailyForecastView: View {
         
         HStack(spacing: 25){
             ForEach(dailyForecast.getDaily()){ data in
-                let dayDate = data.getDayDate()
+                let dayDate = data.getDayDate(timeone: dailyForecast.timezone)
                 VStack{
                     Text(dayDate.0.uppercased()).font(.headline)
                     Text(dayDate.1).font(.caption).padding(.bottom, 5)
@@ -33,7 +33,7 @@ struct DailyForecastView: View {
                     }
                 }
                 .popover(isPresented: self.makeIsPresented(id: data.id.uuidString), arrowEdge: .bottom) {
-                    DailyDetailsPopoverView(data: data, timezone: data.timezone_offset)
+                    DailyDetailsPopoverView(data: data, timezone: dailyForecast.timezone)
                 }
                 .onHover { hover in
                     self.hoverID = data.id.uuidString
@@ -76,32 +76,38 @@ struct DailyDetailsPopoverView: View {
                 }.padding(.trailing)
                 VStack(alignment: .leading){
                     Text(data.description).font(.title2)
-                    Text("FEELS LIKE \(data.feels_like)°\(data.getTempUnit())").font(.footnote)
+                    if data.feels_like != 888 {
+                        Text("FEELS LIKE \(data.feels_like)°\(data.getTempUnit())").font(.footnote)
+                    }
                 }.padding(.trailing).frame(height: 60)
                 VStack (alignment: .leading){
                     HStack{
                         Image(systemName: "sunrise").font(Font.system(size: 15))
-                        Text(data.getSunriseFormatted())
+                        Text(data.getSunriseFormatted(timezone: timezone))
                     }.padding(.bottom, 1)
                     HStack{
                         Image(systemName: "sunset").font(Font.system(size: 15))
-                        Text(data.getSunsetFormatted())
+                        Text(data.getSunsetFormatted(timezone: timezone))
                     }
                 }
             }
             
             HStack{
                 HStack{
-                    Image(systemName: "humidity").font(Font.system(size: 15, weight: .bold))
-                    Text("\(data.humidity)%").font(.headline)
+                    if data.humidity != 888 {
+                        Image(systemName: "humidity").font(Font.system(size: 15, weight: .bold))
+                        Text("\(data.humidity)%").font(.headline)
+                    }
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "wind").font(Font.system(size: 15, weight: .bold))
                     Text("\(data.wind_speed) \(data.getWindUnit())").font(.headline)
                 }.padding(.trailing)
                 HStack{
-                    Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
-                    Text(data.getConvertedPressure()).font(.headline)
+                    if data.pressure != 888 {
+                        Image(systemName: "barometer").font(Font.system(size: 15, weight: .bold))
+                        Text(data.getConvertedPressure()).font(.headline)
+                    }
                 }.padding(.trailing)
                 HStack{
                     Image(systemName: "drop").font(Font.system(size: 15, weight: .bold))

@@ -60,7 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         
         if let menuButton = AppDelegate.statusItem?.button {
             AppDelegate.configureMenuButton(menuButton: menuButton, title: "--°\(Utils.getTempMeasurement())",
-                                            systemSymbolName: weatherData.currentWeather.getIcon())
+                                            systemSymbolName: weatherData.currentWeather.icon)
             menuButton.action = #selector(menuButtonToggle)
             menuButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
@@ -106,7 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate{
                 title += " \(currentWeather.city)"
             }
             
-            configureMenuButton(menuButton: menuButton, title: title, systemSymbolName: currentWeather.getIcon())
+            configureMenuButton(menuButton: menuButton, title: title, systemSymbolName: currentWeather.icon)
         }
     }
     

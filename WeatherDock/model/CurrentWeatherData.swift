@@ -1,5 +1,5 @@
 //
-//  CurrentWeather.swift
+//  CurrentWeatherData.swift
 //  WeatherDock
 //
 //  Created by Aleksandr Stepanischev on 8/27/22.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct CurrentWeather {
+struct CurrentWeatherData {
     var dt = 0.0
     var timezone = 0
-    var weather_condition = 0
+    var icon = "cloud.sun"
     var temperature = 0
     var description = "No data"
     var short_desc = "No data"
@@ -21,10 +21,6 @@ struct CurrentWeather {
     var wind_speed = 0
     var pressure = 0
     var city = "Unknown City"
-    
-    func getIcon() -> String {
-        return Utils.getIconByTimeConditionId(id: weather_condition, dt: dt)
-    }
     
     func getWindUnit() -> String {
         Utils.getSpeedMeasurement()

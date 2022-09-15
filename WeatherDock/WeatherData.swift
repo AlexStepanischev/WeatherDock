@@ -9,7 +9,7 @@ import SwiftUI
 import CoreLocation
 
 class WeatherData: ObservableObject {
-    @Published var currentWeather = CurrentWeather()
+    @Published var currentWeather = CurrentWeatherData()
     @Published var airPollution = AirPollution()
     @Published var hourlyForecast = HourlyForecast(hour_data: [HourData()])
     @Published var dailyForecast = DailyForecast(day_data: [DayData()])
@@ -83,22 +83,41 @@ class WeatherData: ObservableObject {
     //Calling API for loading all data by location
     func loadAllDataByLocation(location: CLLocation){
         self.location = location
-        print("Get all data by location")
-        OpenWeather.loadAllDataByLocation(location: location)
+        print("[APP] Get all data by location")
+        if #available(macOS 13, *) {
+            AppleWeather.loadAllDataByLocation(location: location)
+        } else {
+            OpenWeather.loadAllDataByLocation(location: location)
+        }
     }
     
     //Calling API for loading all data by city name
     private func loadAllDataByCity(){
-        print("Get all data by city")
-        OpenWeather.loadAllDataByCity(city: city)
+        print("[APP] Get all data by city")
+        if #available(macOS 13, *) {
+            AppleWeather.loadAllDataByCity(city: city)
+        } else {
+            OpenWeather.loadAllDataByCity(city: city)
+        }
+        
     }
     
     //Calling API for refreshing current weather data
     func refreshCurrentWeatherData() {
         if getDataBy == GetDataBy.location.rawValue && LocationManager.shared.hasLocationPermission() {
-            OpenWeather.refreshCurrentWeatherData(by: GetDataBy.location)
+            print("[APP] Refresh current weather data by location")
+            if #available(macOS 13, *) {
+                AppleWeather.loadAllDataByLocation(location: location)
+            } else {
+                OpenWeather.refreshCurrentWeatherData(by: GetDataBy.location)
+            }
         } else if city != "Unknown City" {
-            OpenWeather.refreshCurrentWeatherData(by: GetDataBy.city)
+            print("[APP] Refresh current weather data by city")
+            if #available(macOS 13, *) {
+                AppleWeather.loadAllDataByCity(city: city)
+            } else {
+                OpenWeather.refreshCurrentWeatherData(by: GetDataBy.city)
+            }
         }
     }
 }
