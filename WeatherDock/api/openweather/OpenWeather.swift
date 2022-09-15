@@ -217,7 +217,6 @@ struct OpenWeather {
         var newCurrentWeather = CurrentWeatherData()
         newCurrentWeather.dt = data.dt
         newCurrentWeather.timezone = data.timezone
-        newCurrentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
         newCurrentWeather.temperature = Int(data.main.temp.rounded())
         newCurrentWeather.description = data.weather[0].description.firstCapitalized
         newCurrentWeather.short_desc = data.weather[0].main
@@ -230,6 +229,7 @@ struct OpenWeather {
         newCurrentWeather.city = data.name
         
         WeatherData.shared.currentWeather = newCurrentWeather
+        WeatherData.shared.currentWeather.icon = Utils.getIconByTimeConditionId(id: data.weather[0].id, dt: data.dt)
     }
     
     //Updating air pollution data with received data
