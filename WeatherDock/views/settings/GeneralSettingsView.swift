@@ -63,10 +63,9 @@ struct GeneralSettingsView: View {
             Text("Customize menu bar button to show:").padding(.top)
             Form {
                 Toggle("Temperature", isOn: $showTemperature)
-                .onChange(of: showTemperature){
-                    tag in WeatherData.shared.refreshView()
-                    print(LaunchAtLogin.isEnabled)
-                }
+                    .onChange(of: showTemperature){
+                        tag in WeatherData.shared.refreshView()
+                    }
                 Toggle("Short weather description", isOn: $showDescription)
                     .onChange(of: showDescription){
                         tag in WeatherData.shared.refreshView()
