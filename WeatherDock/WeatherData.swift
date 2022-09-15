@@ -16,6 +16,7 @@ class WeatherData: ObservableObject {
 
     @Published var updater = true
     
+    @AppStorage("dataSource") private var dataSource = DefaultSettings.dataSource
     @AppStorage("getDataBy") var getDataBy = DefaultSettings.getDataBy
     @AppStorage("city") var city = "Unknown City"
     @Published var location = CLLocation(latitude: 0.0, longitude: 0.0)
@@ -84,7 +85,7 @@ class WeatherData: ObservableObject {
     func loadAllDataByLocation(location: CLLocation){
         self.location = location
         print("[APP] Get all data by location")
-        if #available(macOS 13, *) {
+        if #available(macOS 13, *), dataSource == DataSource.appleweather.rawValue {
             AppleWeather.loadAllDataByLocation(location: location)
         } else {
             OpenWeather.loadAllDataByLocation(location: location)
@@ -94,7 +95,7 @@ class WeatherData: ObservableObject {
     //Calling API for loading all data by city name
     private func loadAllDataByCity(){
         print("[APP] Get all data by city")
-        if #available(macOS 13, *) {
+        if #available(macOS 13, *), dataSource == DataSource.appleweather.rawValue {
             AppleWeather.loadAllDataByCity(city: city)
         } else {
             OpenWeather.loadAllDataByCity(city: city)
@@ -106,14 +107,14 @@ class WeatherData: ObservableObject {
     func refreshCurrentWeatherData() {
         if getDataBy == GetDataBy.location.rawValue && LocationManager.shared.hasLocationPermission() {
             print("[APP] Refresh current weather data by location")
-            if #available(macOS 13, *) {
+            if #available(macOS 13, *), dataSource == DataSource.appleweather.rawValue {
                 AppleWeather.loadAllDataByLocation(location: location)
             } else {
                 OpenWeather.refreshCurrentWeatherData(by: GetDataBy.location)
             }
         } else if city != "Unknown City" {
             print("[APP] Refresh current weather data by city")
-            if #available(macOS 13, *) {
+            if #available(macOS 13, *), dataSource == DataSource.appleweather.rawValue {
                 AppleWeather.loadAllDataByCity(city: city)
             } else {
                 OpenWeather.refreshCurrentWeatherData(by: GetDataBy.city)

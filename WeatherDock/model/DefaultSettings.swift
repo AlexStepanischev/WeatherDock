@@ -15,6 +15,7 @@ struct DefaultSettings {
     static let showTemperature = true
     static let showDescription = false
     static let showCityName = false
+    static let dataSource = DataSource.unknown.rawValue
 }
 
 enum UnitsOfMeasurement: String, Identifiable{
@@ -34,5 +35,10 @@ enum TimeFormat: String, Identifiable {
 
 enum GetDataBy: String, Identifiable {
     case location, city
+    var id: String { self.rawValue }
+}
+
+enum DataSource: String, Identifiable{
+    case unknown, openweather, appleweather
     var id: String { self.rawValue }
 }

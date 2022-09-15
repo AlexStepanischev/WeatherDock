@@ -27,11 +27,15 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     @AppStorage("showTemperature") private static var showTemperature = DefaultSettings.showTemperature
     @AppStorage("showDescription") private static var showDescription = DefaultSettings.showDescription
     @AppStorage("showCityName") private static var showCityName = DefaultSettings.showCityName
+    @AppStorage("dataSource") private static var dataSource = DefaultSettings.dataSource
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         //Start tracking onWake event
         fileNotifications()
+        
+        //Setting default data source
+        setDataSource()
 
         //Loading application data
         weatherData.initData()
@@ -150,5 +154,16 @@ class AppDelegate: NSObject, NSApplicationDelegate{
     @objc private func onWakeNote(note: NSNotification) {
         weatherData.getAllData()
         weatherData.setTimer()
+    }
+    
+    //Setting default data source
+    private func setDataSource(){
+        if AppDelegate.dataSource == DataSource.unknown.rawValue {
+            if #available(macOS 13, *) {
+                AppDelegate.dataSource = DataSource.appleweather.rawValue
+            } else {
+                AppDelegate.dataSource = DataSource.openweather.rawValue
+            }
+        }
     }
 }

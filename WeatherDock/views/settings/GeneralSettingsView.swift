@@ -15,11 +15,24 @@ struct GeneralSettingsView: View {
     @AppStorage("showTemperature") private var showTemperature = DefaultSettings.showTemperature
     @AppStorage("showDescription") private var showDescription = DefaultSettings.showDescription
     @AppStorage("showCityName") private var showCityName = DefaultSettings.showCityName
+    @AppStorage("dataSource") private var dataSource = DefaultSettings.dataSource
     
     @State private var showGreeting = true
     
     var body: some View {
         VStack {
+            Form {
+                Picker("Data source", selection: $dataSource) {
+                    Text("Apple Weather").tag(DataSource.appleweather.rawValue)
+                    Text("Open Weather").tag(DataSource.openweather.rawValue)
+                }
+                .onChange(of: dataSource) {
+                    tag in LocationManager.shared.getDataByLocation()
+                }
+            }
+            .padding(.horizontal, 60)
+            .padding(.vertical)
+            Divider()
             Form {
                 Picker("Units of measurement", selection: $unitsOfMeasurement) {
                     Text("Imperial").tag(UnitsOfMeasurement.imperial.rawValue)
