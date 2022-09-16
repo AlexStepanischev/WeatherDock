@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2417FE6828D48648009F218A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2417FE6728D48648009F218A /* NetworkManager.swift */; };
 		24A5016128C09A7B0028DEE8 /* AppleWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A5016028C09A7B0028DEE8 /* AppleWeather.swift */; };
 		24ABA43828BA26D300AF848D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA43728BA26D300AF848D /* HeaderView.swift */; };
 		24ABA43B28BA67AD00AF848D /* CurrentWeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24ABA43A28BA67AD00AF848D /* CurrentWeatherData.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2417FE6728D48648009F218A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		24A5016028C09A7B0028DEE8 /* AppleWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWeather.swift; sourceTree = "<group>"; };
 		24ABA43728BA26D300AF848D /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		24ABA43A28BA67AD00AF848D /* CurrentWeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherData.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				E261C3F2283285100048B5DE /* LocationManager.swift */,
 				24A5016028C09A7B0028DEE8 /* AppleWeather.swift */,
+				2417FE6728D48648009F218A /* NetworkManager.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				E261C406283285100048B5DE /* CurrentWeatherView.swift in Sources */,
 				E2C1CF1928634A6400F07A34 /* AirPollutionResponse.swift in Sources */,
 				24ABA44828BCD5D100AF848D /* HourlyForecast.swift in Sources */,
+				2417FE6828D48648009F218A /* NetworkManager.swift in Sources */,
 				E261C3FF283285100048B5DE /* Extentions.swift in Sources */,
 				E261C403283285100048B5DE /* SettingsView.swift in Sources */,
 			);

@@ -37,8 +37,8 @@ class AppDelegate: NSObject, NSApplicationDelegate{
         //Setting default data source
         setDataSource()
 
-        //Loading application data
-        weatherData.initData()
+        //Checking for internet connection and initialising an application data
+       _ = NetworkManager()
                 
         //Setting up main pop-over view
         setupMainView()
