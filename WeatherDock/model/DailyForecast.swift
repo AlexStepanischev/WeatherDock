@@ -51,7 +51,11 @@ struct DailyForecast {
             }
             
         }
-        return Array<DayData>(data.prefix(upTo: 7))
+        if data.count > 6 {
+            return Array<DayData>(data.prefix(upTo: 7))
+        } else {
+            return data
+        }
     }
     
     func getDailyTrimmedToSeven() -> [DayData] {
