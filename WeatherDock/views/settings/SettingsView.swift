@@ -18,11 +18,11 @@ struct SettingsView: View {
                     Label("General", systemImage: "gear")
                 }
                 .tag(Tabs.general)
-            DonateView()
-                .tabItem {
-                    Label("Donate", systemImage: "heart")
-                }
-                .tag(Tabs.donate)
+//            DonateView()
+//                .tabItem {
+//                    Label("Donate", systemImage: "heart")
+//                }
+//                .tag(Tabs.donate)
             AboutSettingsView()
                 .tabItem {
                     Label("About", systemImage: "star")

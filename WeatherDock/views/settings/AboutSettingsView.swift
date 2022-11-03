@@ -45,7 +45,7 @@ struct AboutSettingsView: View {
 
 @available(macOS 13.0, *)
 struct AttributionView: View {
-    let attributionLink = URL(string: "https://weather-data.apple.com/legal-attribution.html")
+    let attributionLink = URL(string: "https://weatherkit.apple.com/legal-attribution.html")
     let attributionLogo = "applelogo"
     var body: some View {
         HStack{
