@@ -39,6 +39,21 @@ struct HeaderView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .padding(.trailing)
+            Menu{
+                Button {
+                    NSApplication.shared.terminate(self)
+                } label: {
+                    Text("Quit")
+                }
+                .buttonStyle(PlainButtonStyle())
+            } label: {
+                Image(systemName: "xmark")
+            }
+            .frame(width: 10)
+            .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .padding(.trailing)
+
         }.padding(.top)
     }
 }
