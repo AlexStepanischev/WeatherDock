@@ -5,8 +5,7 @@ Weather Dock is a MacOS headless application that shows popover view under the m
 Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
 
 [![Download on the Mac App Store](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/app/id1624480719)
-[!
-[Buy me a coffee](/docs/images/bmac.png "Buy me a coffee")](https://www.buymeacoffee.com/astep)
+[<img src="/docs/images/bmac.png" alt="Buy me a coffee" height="40"/>](https://www.buymeacoffee.com/astep)
 ### Screenshots
 ![Light mode screenshot](/docs/images/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/images/screen2.png "Dark mode screenshot")
 ### Functionality
