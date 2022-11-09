@@ -27,18 +27,6 @@ struct HeaderView: View {
             Spacer()
             Text(currentWeather.getDate()).font(.title2).padding(.bottom, 1)
             Spacer()
-            Button {
-                NSApp.activate(ignoringOtherApps: true)
-                if #available(macOS 13, *) {
-                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                } else {
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                }
-            } label: {
-                Image(systemName: "gearshape")
-            }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.trailing)
             Menu{
                 Button {
                     NSApplication.shared.terminate(self)
@@ -49,7 +37,7 @@ struct HeaderView: View {
             } label: {
                 Image(systemName: "xmark")
             }
-            .frame(width: 10)
+            .frame(width: 13)
             .menuStyle(.borderlessButton)
             .menuIndicator(.hidden)
             .padding(.trailing)

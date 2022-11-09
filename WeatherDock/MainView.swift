@@ -29,6 +29,7 @@ struct MainView: View {
                     Image(systemName: "location")
                 }
                 .buttonStyle(PlainButtonStyle())
+                .padding(.leading)
 
                 TextField("City Name", text: Binding(
                         get: { return self.city },
@@ -52,8 +53,21 @@ struct MainView: View {
                             NSApp.keyWindow?.makeFirstResponder(nil)
                         }
                 }
-                .frame(width: 375)
+                .frame(width: 350)
                 .multilineTextAlignment(.center)
+                Spacer()
+                Button {
+                    NSApp.activate(ignoringOtherApps: true)
+                    if #available(macOS 13, *) {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    } else {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    }
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.trailing)
    
             }.padding(.top, 5)
             
