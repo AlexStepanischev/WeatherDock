@@ -40,6 +40,7 @@
 		E2A0AAF02833CFEF002AFACF /* screen1.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEE2833CFEF002AFACF /* screen1.png */; };
 		E2A0AAF12833CFEF002AFACF /* screen2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2A0AAEF2833CFEF002AFACF /* screen2.png */; };
 		E2A0AAF42837A11E002AFACF /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A0AAF32837A11E002AFACF /* LaunchAtLogin */; };
+		E2B90742291BC12900C35FC9 /* bmac.png in Resources */ = {isa = PBXBuildFile; fileRef = E2B90741291BC12900C35FC9 /* bmac.png */; };
 		E2C1CF1928634A6400F07A34 /* AirPollutionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1CF1828634A6400F07A34 /* AirPollutionResponse.swift */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +81,7 @@
 		E261C40D283378730048B5DE /* index.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = index.md; sourceTree = "<group>"; };
 		E2A0AAEE2833CFEF002AFACF /* screen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen1.png; sourceTree = "<group>"; };
 		E2A0AAEF2833CFEF002AFACF /* screen2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screen2.png; sourceTree = "<group>"; };
+		E2B90741291BC12900C35FC9 /* bmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bmac.png; sourceTree = "<group>"; };
 		E2C1CF1828634A6400F07A34 /* AirPollutionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPollutionResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -244,6 +246,7 @@
 		E2A0AADC2833CA92002AFACF /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E2B90741291BC12900C35FC9 /* bmac.png */,
 				E2A0AAEE2833CFEF002AFACF /* screen1.png */,
 				E2A0AAEF2833CFEF002AFACF /* screen2.png */,
 			);
@@ -321,6 +324,7 @@
 				E2A0AAF12833CFEF002AFACF /* screen2.png in Resources */,
 				E261C3E8283284E00048B5DE /* README.md in Resources */,
 				E261C3DB283283F50048B5DE /* Assets.xcassets in Resources */,
+				E2B90742291BC12900C35FC9 /* bmac.png in Resources */,
 				E2A0AAF02833CFEF002AFACF /* screen1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

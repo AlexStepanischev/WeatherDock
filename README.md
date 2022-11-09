@@ -4,7 +4,9 @@ Weather Dock is a MacOS headless application that shows popover view under the m
 ### Download
 Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
 
-[![](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/app/id1624480719)
+[![Download on the Mac App Store](https://tools.applemediaservices.com/api/badges/download-on-the-mac-app-store/black/en-us?size=250x83&releaseDate=1615852800)](https://apps.apple.com/app/id1624480719)
+[!
+[Buy me a coffee](/docs/images/bmac.png "Buy me a coffee")](https://www.buymeacoffee.com/astep)
 ### Screenshots
 ![Light mode screenshot](/docs/images/screen1.png "Light mode screenshot") ![Dark mode screenshot](/docs/images/screen2.png "Dark mode screenshot")
 ### Functionality
@@ -27,13 +29,14 @@ Application built with **SwiftUI**, requires **MacOS Monterey 12.0 or later**
     
 ### Third Parties
  - Application powered by [OpenWeatherAPI](https://openweathermap.org/api)
+ - From version 2.0 application uses Apple's WeatherKit as data source
  - Launch at login setting added as a dependency on [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin) helper
  
 ### Changelog
  - For changelog please visit [Releases](https://github.com/AlexStepanischev/WeatherDock/releases) page
  
 ## How to build
-Application build tested under **Xcode 13.3.1, 13.4**
+Application build requires **Xcode 14.1 or later**
 - Clone repository and open project with Xcode
 - Register [OpenWeatherAPI](https://openweathermap.org/api) free tier account and get your own API key
 - Create **keys.plist** file under project folder and add 
@@ -41,9 +44,10 @@ Application build tested under **Xcode 13.3.1, 13.4**
     | Key | Type | Value |
     | ------------- |:-------------:|:-------------:|
     | openweather_api_key | String | {your API key} |
+- Starting from version 2.0 application uses **WeatherKit** from Apple, so make sure it's enabled in your https://developer.apple.com account in Services section
 - Build, run and enjoy!
 
 ## Support
-If you need a support or have any questions, feedback, bug reports or feature requests, please, contact via Telegram chat: https://t.me/weather_dock_app
+If you need a support or have any questions, feedback, bug reports or feature requests, please, contact via Telegram chat https://t.me/weather_dock_app or Whatsapp https://chat.whatsapp.com/FtHmQLWtE4jBijg1THdgBJ
 
 [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/)
