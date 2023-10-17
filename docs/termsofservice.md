@@ -3,7 +3,7 @@
 There are **Terms of Service**. They tell you: the rules for using Applications, your rights and responsibilities, other important conditions. Please read these **Terms of Service** carefully before using Applications.
 
 ## General conditions and definitions
-By accessing and or using Applications you are agree to be bound by these **Terms of Service** and [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/). If you disagree with any part of the terms then you may not access to the Applications. We may amend (update) these **Terms of Service** at any time by posting (placing) the updated **Terms of Service**.
+By accessing and or using Applications you are agree to be bound by these **Terms of Service** and [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy). If you disagree with any part of the terms then you may not access to the Applications. We may amend (update) these **Terms of Service** at any time by posting (placing) the updated **Terms of Service**.
 
 By paying for the right to use any of Applications (or just by installing the Application, if appropriate free version is available) you can use available functionality of the Applications in accordance with these **Terms of Service**.
 
@@ -26,7 +26,7 @@ Desktop applications:
 
 ## Agreement and execution
 
-The content of this agreement (**Terms of Service**) includes main body of this agreement and various rules that have been posted or may be posted from time to time by the Owner. In particular, refers to [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/) and these **Terms of Service**. All of the rules shall be an integral part of this agreement, and shall have the same legal effect as the main body of this agreement. Unless otherwise expressly provided.
+The content of this agreement (**Terms of Service**) includes main body of this agreement and various rules that have been posted or may be posted from time to time by the Owner. In particular, refers to [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy) and these **Terms of Service**. All of the rules shall be an integral part of this agreement, and shall have the same legal effect as the main body of this agreement. Unless otherwise expressly provided.
 
 You shall not claim to void or rescind this agreement on the ground that you did not read this agreement or you did not receive any respond from the Owner or Operator to your requests. You hereby promise to accept and observe this agreement. If you do not agree with this agreement, you shall immediately stop registration/activation or stop using the Applications.
 
@@ -59,7 +59,7 @@ THE INFORMATION, MATERIALS, OTHER CONTENT AND FUNCTIONALITY IN APPLICATIONS ARE 
 
 APPLICATIONS IS OPERATED BY OWNER OR OPERATOR ON AN "AS IS," "AS AVAILABLE" BASIS, WITHOUT REPRESENTATIONS OR WARRANTIES OF ANY KIND. TO THE FULLEST EXTENT PERMITTED BY THE LAW, OWNER OR OPERATOR SPECIFICALLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND.
 
-We are also not liable for user's data safety. In doing so, according to our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/) (Annex №1) we are undertaking all reasonable measures to ensure adequate protection of user's Personally Identifiable Information.
+We are also not liable for user's data safety. In doing so, according to our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy) (Annex №1) we are undertaking all reasonable measures to ensure adequate protection of user's Personally Identifiable Information.
 
 We can stop support any of Applications at any time and at our own discretion.
 
@@ -83,9 +83,9 @@ WE MAKE NO REPRESENTATIONS AS TO ACCURACY, COMPLETENESS, SUITABILITY, OR VALIDIT
 
 We make no representations about the results to be obtained from using the Applications. The usage of the Applications and content is at your (the person who uses it) own risk. You further agree that We shall not be held responsible for any uncontrollable security attack leading to failures of the Applications and in such cases you agree that We shall not be held responsible for any type of losses that may occur to you.
 
-You (the User) must ensure the safety/privacy of the login and password from your accounts. We are not liable for user's data safety. In doing so, according to our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/) (Annex №1) we are undertaking all reasonable measures to ensure adequate protection of user's Personally Identifiable Information.
+You (the User) must ensure the safety/privacy of the login and password from your accounts. We are not liable for user's data safety. In doing so, according to our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy) (Annex №1) we are undertaking all reasonable measures to ensure adequate protection of user's Personally Identifiable Information.
 
-To use any of Applications You have to get know and agree with provisions of our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/) and these **Terms of Service** of Applications.
+To use any of Applications You have to get know and agree with provisions of our [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy) and these **Terms of Service** of Applications.
 
 WE ALSO SPECIFICALLY DISCLAIMS AND SHALL HAVE NO LIABILITY TO YOU FOR THE FOLLOWING RISKS: operating system failures; errors interactions between your hardware, software and the Applications; the implications of using the cloud backup software; malware, viruses or other malicious software on your device that are able to take control or interfere with the Applications; any possible delays in communications; any negative implications for You and or the third parties, which ensued from any possible disruption to the work of the Applications.
 
@@ -98,7 +98,7 @@ BY USING APPLICATIONS, YOU ARE AGREE THAT THE EXCLUSIONS AND LIMITATIONS OF LIAB
 If any provision of this DISCLAIMER is found to be unenforceable under applicable law, that will not affect the enforceability of the other provisions of this DISCLAIMER.
 
 ## Privacy Policy
-To use any of Applications You have to get know and agree with all of regulations governing general rules of User’s Personal Data collection, processing, distribution, usage and keeping by Owner which are set out in Annex №1 – [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/).
+To use any of Applications You have to get know and agree with all of regulations governing general rules of User’s Personal Data collection, processing, distribution, usage and keeping by Owner which are set out in Annex №1 – [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy).
 
 ## User's account removal; Termination of Relationships
 We can block (remove) user's account at our own discretion if there is a reason to assume that user's account is used to make illegal activities, harm other users or used in violation of these **Terms of Service**. Upon removal, your right to use the Application will immediately cease.
@@ -112,7 +112,7 @@ Judicially recognition of the invalidity of certain provisions of this Agreement
 
 ## Annex
 This Agreement contains the following annexes which are its integral part (and also are an independent legal documents):
-- Annex №1 (consent to processing personal data and other regulations regarding processing personal data of Users) – [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/).
+- Annex №1 (consent to processing personal data and other regulations regarding processing personal data of Users) – [Privacy Policy](https://alexstepanischev.github.io/WeatherDock/privacypolicy).
 
 ## Contact us
 If you have any questions concerning these **Terms of Service** or any of Applications, please contact us via [Weather Dock App](https://t.me/weather_dock_app) Telegram chat or WhatsApp [Weather Dock App](https://chat.whatsapp.com/FtHmQLWtE4jBijg1THdgBJ) group.
